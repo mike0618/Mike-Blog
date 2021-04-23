@@ -37,7 +37,7 @@ while input("Do you want to play Blackjack? Type 'y' or 'n': ") == 'y':
     user_hand = [get_card(), get_card()]
 #     clear()
     print(logo)
-    print(f"Your cards {user_hand}, current score: {sum(user_hand)}")
+    print(f"Your cards {user_hand}, current score: {count(user_hand)}")
     print(f"Dealer's first card: {dealer_hand[0]}")
     user_score = play(user_hand)
     if user_score > 21:
