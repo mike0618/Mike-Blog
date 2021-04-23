@@ -37,7 +37,7 @@ def calculator():
         print(f"{num1} {operation} {num2} = {answer}\n")
         proceed = input(f"Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation, or type 'exit' to exit: ")
         if proceed == 'exit':
-            return 'Bye'
+            return answer
         num1 = answer
     calculator()
 
