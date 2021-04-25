@@ -21,9 +21,9 @@ while True:
         second = choice(data)
     count_b = second['follower_count']
 
-    print("Compare A: " + format_data(first) + f", {count_a}M followers")
+    print(f"Compare A: {format_data(first)}, {count_a}M followers")
     print(vs)
-    print(f"Against B: " + format_data(second))
+    print(f"Against B: {format_data(second)}")
 
     answer = input("Who has more followers? Type 'A' or 'B': ").upper()
 
