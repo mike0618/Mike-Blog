@@ -14,6 +14,8 @@ while True:
     count_a = first['follower_count']
 
     second = choice(data)
+    while second == first:
+        second = choice(data)
     name_b = second['name']
     desc_b = second['description']
     country_b = second['country']
