@@ -57,8 +57,8 @@ def snake_game():
             game_on = False
         # Detect collision with tail.
         if intrboard.intr_allow == 'NO':
-            for sgm in snake.snake:
-                if sgm != snake.head and snake.head.distance(sgm) < 10:
+            for sgm in snake.snake[1:]:
+                if snake.head.distance(sgm) < 10:
                     scoreboard.gameover()
                     game_on = False
                     break
