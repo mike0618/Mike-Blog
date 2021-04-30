@@ -22,14 +22,14 @@ class Writebrd(Turtle):
         self.write(f"Score: {self.score}", False, ALIGN, FONT)
 
     def writespeed(self, num):
-        self.goto(-370, 240)
+        self.goto(-360, 240)
         self.clear()
         self.write(f"Speed: {num}", False, ALIGN, FONT)
 
     def gameover(self):
         self.home()
         self.write("GAME OVER", False, ALIGN, FONT)
-        sleep(1)
+        sleep(2)
 
     def check_intr(self):
         self.goto(300, 240)

@@ -1,6 +1,6 @@
 from turtle import Screen
 from snake import Snake
-from food import Food
+from food import Food, Bonus
 from board import Writebrd, Border
 from tkinter import messagebox
 
@@ -11,7 +11,7 @@ def snake_game():
     screen.bgcolor('#363636')
     screen.title('My PySnake Game')
     screen.tracer(0)
-    border = Border()
+    Border()
 
     messagebox.showinfo("Welcome to PySnake!",
                      "Controls:\n"
@@ -31,7 +31,13 @@ def snake_game():
     screen.onkey(intrboard.intr_switch, 'i')
     screen.onkeyrelease(screen.bye, 'Escape')
 
-    food = Food()
+    # food = Food()
+    food = [
+        Food(),
+        Bonus((420, 260)),
+        Bonus((-420, -260)),
+        Bonus((-420, 260)),
+        Bonus((420, -260)), ]
     scoreboard = Writebrd()
     speedboard = Writebrd()
 
@@ -42,13 +48,14 @@ def snake_game():
         speedboard.writespeed(snake.speed)
         intrboard.check_intr()
         # Detect collision with food.
-        if snake.head.distance(food) < 10:
-            food.refresh()
-            snake.extend()
-            scoreboard.score += 1
-            scoreboard.writescore()
-            if not scoreboard.score % 5:
-                snake.speed += 1
+        for piece in food:
+            if snake.head.distance(piece) < 10:
+                food[0].refresh()
+                snake.extend()
+                scoreboard.score += 1
+                scoreboard.writescore()
+                if not scoreboard.score % 5:
+                    snake.speed += 1
         # Detect collision with wall.
         snake_x = snake.head.xcor()
         snake_y = snake.head.ycor()
