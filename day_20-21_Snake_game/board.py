@@ -15,6 +15,8 @@ class Writebrd(Turtle):
         self.color('yellow')
         self.penup()
         self.writescore()
+        self.on = True
+        self.paused = False
 
     def writescore(self):
         self.goto(-250, 240)
@@ -29,7 +31,16 @@ class Writebrd(Turtle):
     def gameover(self):
         self.home()
         self.write("GAME OVER", False, ALIGN, FONT)
-        sleep(2)
+        self.on = False
+        sleep(1)
+
+    def writepause(self):
+        self.home()
+        self.write("PAUSED", False, ALIGN, FONT)
+        self.clear()
+
+    def pause(self):
+        self.paused = not self.paused
 
     def check_intr(self):
         self.goto(300, 240)
