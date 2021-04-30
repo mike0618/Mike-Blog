@@ -40,6 +40,8 @@ class Ball(Turtle):
         self.randcolor()
         self.xinc = 5
         self.yinc = 5
+        self.paused = False
+        self.on = True
 
     def move(self):
         if abs(self.ycor()) == Y // 2 - 20:
@@ -62,6 +64,13 @@ class Ball(Turtle):
 
     def randcolor(self):
         self.color('#' + str("%06x" % randint(0x363636, 0xFFFFFF)))
+
+    def pause_game(self):
+        self.paused = not self.paused
+
+    def end_game(self):
+        self.on = False
+
 
 class Wall(Turtle):
     def __init__(self, position):
