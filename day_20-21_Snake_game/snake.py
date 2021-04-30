@@ -5,13 +5,13 @@ MOVE_DIST = 20
 START_X = 0
 START_Y = 0
 
+
 class Snake:
     def __init__(self, length):
         self.length = length
         self.speed = 3
         self.snake = []
         self.x = START_X
-        self.paused = False
         for i in range(self.length):
             self.x -= MOVE_DIST
             self.add_turtle((self.x, START_Y))
@@ -58,6 +58,3 @@ class Snake:
 
     def speed_down(self):
         self.speed //= 2
-
-    def pause(self):
-        self.paused = not self.paused

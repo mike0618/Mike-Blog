@@ -8,6 +8,7 @@ from time import sleep
 
 def snake_game():
     screen = Screen()
+    screen.clear()
     screen.setup(880, 560, 520)
     screen.bgcolor('#363636')
     screen.title('My PySnake Game')
@@ -50,6 +51,7 @@ def snake_game():
         while pauseboard.on and not pauseboard.paused:
             snake.move()
             speedboard.writespeed(snake.speed)
+            scoreboard.writescore()
             intrboard.check_intr()
             # Detect collision with food.
             for piece in food:
@@ -57,7 +59,6 @@ def snake_game():
                     food[0].refresh()
                     snake.extend()
                     scoreboard.score += 1
-                    scoreboard.writescore()
                     if not scoreboard.score % 5:
                         snake.speed += 1
             # Detect collision with wall.
@@ -80,7 +81,6 @@ def snake_game():
         play()
         sleep(0.2)
         screen.update()
-    screen.clear()
 
 
 retry = True

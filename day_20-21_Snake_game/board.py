@@ -1,10 +1,10 @@
 from turtle import Turtle
-from time import sleep
 
 ALIGN = 'center'
 FONT = ('Arial', 16, 'normal')
 X = 440
 Y = 280
+
 
 class Writebrd(Turtle):
     def __init__(self):
@@ -14,7 +14,6 @@ class Writebrd(Turtle):
         self.hideturtle()
         self.color('yellow')
         self.penup()
-        self.writescore()
         self.on = True
         self.paused = False
 
@@ -32,7 +31,6 @@ class Writebrd(Turtle):
         self.home()
         self.write("GAME OVER", False, ALIGN, FONT)
         self.on = False
-        sleep(1)
 
     def writepause(self):
         self.home()
@@ -52,7 +50,6 @@ class Writebrd(Turtle):
             self.intr_allow = 'YES'
         else:
             self.intr_allow = 'NO'
-
 
 
 class Border(Turtle):
