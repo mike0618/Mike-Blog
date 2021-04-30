@@ -14,9 +14,14 @@ class Paddle(Turtle):
         self.speed('fastest')
         self.goto(position)
         self.shape('square')
-        self.shapesize(5, 1)
+        self.shapesize(5, 3)
         self.randcolor()
         self.y_lim = (Y - self.shapesize()[0] * MOVE_DIST) // 2 - MOVE_DIST
+        self.ondrag(self.dragging)
+
+    def dragging(self, x, y):
+        self.goto(self.xcor(), y)
+        self.ondrag(self.dragging)
 
     def up(self):
         if self.ycor() < self.y_lim:

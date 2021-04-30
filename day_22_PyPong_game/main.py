@@ -12,13 +12,18 @@ screen.setup(X, Y)
 screen.bgcolor('black')
 screen.tracer(0)
 
-r_paddle = Paddle((X // 2 - 50, 0))
-l_paddle = Paddle((-(X // 2 - 50), 0))
+r_paddle = Paddle((X // 2 - 30, 0))
+l_paddle = Paddle((-(X // 2 - 30), 0))
 ball = Ball()
 scores = Score()
 vel = Velocity()
 upwall = Wall((0, Y // 2))
 btmwall = Wall((0, -Y // 2))
+
+
+def pause_on_click(x, y):
+    ball.pause_game()
+
 
 screen.listen()
 screen.onkey(r_paddle.up, 'Up')
@@ -29,16 +34,18 @@ screen.onkey(ball.velinc, 'Right')
 screen.onkey(ball.veldec, 'Left')
 screen.onkey(ball.end_game, 'Escape')
 screen.onkey(ball.pause_game, 'p')
+screen.onclick(pause_on_click, 3)
 screen.onkeypress(upwall.psyon, 'space')
 screen.onkeyrelease(upwall.psyoff, 'space')
 
 messagebox.showinfo('Welcome to PyPong!',
                     'UP/DOWN: move right paddle\n'
                     'W/S    : move left paddle\n'
-                    'RIGHT/LEFT : velocity\n'
+                    'or use MOUSE LEFT\n'
+                    '\nRIGHT/LEFT : velocity\n'
                     '\nSPACE : !warning! psychedelic mode\n'
                     'can cause an epileptic seizure\n'
-                    '\nP     : pause\n'
+                    '\nP or MOUSE RIGHT: pause\n'
                     'ESC    : exit')
 
 
@@ -72,7 +79,8 @@ def pong():
         vel.vupdate(ball.vel)
         screen.update()
 
+
 while ball.on:
-    sleep(0.2)
+    sleep(0.1)
     pong()
     screen.update()
