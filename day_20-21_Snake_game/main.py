@@ -43,7 +43,7 @@ def snake_game():
 
     game_on = True
     while game_on:
-        screen.update()
+
         snake.move()
         speedboard.writespeed(snake.speed)
         intrboard.check_intr()
@@ -69,6 +69,7 @@ def snake_game():
                     scoreboard.gameover()
                     game_on = False
                     break
+        screen.update()
     screen.clear()
 
 
