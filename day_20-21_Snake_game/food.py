@@ -14,3 +14,9 @@ class Food(Turtle):
 
     def refresh(self):
         self.goto(randint(-20, 20) * 20, randint(-12, 12) * 20)
+
+class Bonus(Food):
+    def __init__(self, position):
+        super(Bonus, self).__init__()
+        self.color('darkcyan')
+        self.goto(position)
