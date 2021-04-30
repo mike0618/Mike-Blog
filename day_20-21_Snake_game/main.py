@@ -46,7 +46,6 @@ def snake_game():
         Bonus((-420, 260)),
         Bonus((420, -260)), ]
 
-
     def play():
         while pauseboard.on and not pauseboard.paused:
             snake.move()
@@ -76,7 +75,6 @@ def snake_game():
         if pauseboard.paused:
             pauseboard.writepause()
 
-
     while pauseboard.on:
         play()
         sleep(0.2)
@@ -86,4 +84,4 @@ def snake_game():
 retry = True
 while retry:
     snake_game()
-    retry = messagebox.askyesno(None, 'Play again?')
+    retry = messagebox.askyesno('PySnake', 'Play again?')
