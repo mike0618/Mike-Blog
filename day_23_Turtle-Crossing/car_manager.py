@@ -27,13 +27,5 @@ class CarManager:
             if len(self.cars) > 50:
                 self.cars.pop(0)
 
-
-    def move(self):
-        for car in self.cars:
-            if car.ycor() > 0:
-                car.back(self.car_speed)
-            else:
-                car.forward(self.car_speed)
-
     def level_up(self):
         self.car_speed += STARTING_MOVE_DISTANCE
