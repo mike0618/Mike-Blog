@@ -20,7 +20,7 @@ while game_is_on:
     car_manager.move()
     py = player.ycor()
     # Detect collision with car
-    for car in car_manager.cars:
+    for car in car_manager.cars[:50]:
         cy = car.ycor()
         if player.distance(car) < 30 and py - cy < 20 and cy - py < 25:
             game_is_on = False
