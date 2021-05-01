@@ -18,10 +18,10 @@ def snake_game():
     dn_btn = Updown((0, -372))
     l_btn = Leftright((-532, 0))
     r_btn = Leftright((532, 0))
-    intrs_btn = Corner((532, 372))
+    intrs_btn = Corner((-532, 372))
     pause_btn = Corner((-532, -372))
     speed_btn = Corner((532, -372))
-    close_btn = Corner((-532, 372))
+    close_btn = Corner((532, 372))
 
     messagebox.showinfo("Welcome to PySnake!",
                      "Controls:\n"
@@ -32,10 +32,9 @@ def snake_game():
                      "End game:             ESC")
 
     snake = Snake(3)
-    intrboard = Writebrd()
     scoreboard = Writebrd()
-    speedboard = Writebrd()
-    pauseboard = Writebrd()
+    with open('data.txt') as f:
+        scoreboard.high_score = int(f.read())
     Writebrd().write_btn()
 
     screen.listen()
@@ -51,12 +50,12 @@ def snake_game():
     speed_btn.onclick(snake.speed_up)
     screen.onkeyrelease(snake.speed_down, 'space')
     speed_btn.onrelease(snake.speed_down)
-    screen.onkey(intrboard.intr_switch, 'i')
-    intrs_btn.onclick(intrboard.intr_switch)
-    screen.onkeyrelease(pauseboard.gameover, 'Escape')
-    close_btn.onclick(pauseboard.gameover)
-    screen.onkey(pauseboard.pause, 'p')
-    pause_btn.onclick(pauseboard.pause)
+    screen.onkey(scoreboard.intr_switch, 'i')
+    intrs_btn.onclick(scoreboard.intr_switch)
+    screen.onkey(scoreboard.gameover, 'Escape')
+    close_btn.onclick(scoreboard.gameover)
+    screen.onkey(scoreboard.pause, 'p')
+    pause_btn.onclick(scoreboard.pause)
 
 
     food = [
@@ -67,11 +66,9 @@ def snake_game():
         Bonus((420, -260)), ]
 
     def play():
-        while pauseboard.on and not pauseboard.paused:
+        while scoreboard.on and not scoreboard.paused:
             snake.move()
-            speedboard.writespeed(snake.speed)
-            scoreboard.writescore()
-            intrboard.check_intr()
+            scoreboard.writescore(snake.speed)
             # Detect collision with food.
             for piece in food:
                 if snake.head.distance(piece) < 10:
@@ -83,25 +80,28 @@ def snake_game():
             # Detect collision with wall.
             snake_x = snake.head.xcor()
             snake_y = snake.head.ycor()
+            screen.update()
             if abs(snake_x) > 420 or abs(snake_y) > 260:
-                pauseboard.gameover()
+                scoreboard.gameover()
             # Detect collision with tail.
-            if intrboard.intr_allow == 'NO':
+            if scoreboard.intr_allow == 'NO':
                 for sgm in snake.snake[1:]:
                     if snake.head.distance(sgm) < 10:
-                        pauseboard.gameover()
+                        scoreboard.gameover()
                         break
-            screen.update()
-        if pauseboard.paused:
-            pauseboard.writepause()
+            if not scoreboard.on:
+                scoreboard.gameover()
 
-    while pauseboard.on:
+        if scoreboard.paused:
+            scoreboard.writepause()
+
+    while scoreboard.on:
         play()
         sleep(0.2)
-        screen.update()
 
 
 retry = True
 while retry:
+
     snake_game()
     retry = messagebox.askyesno('PySnake', 'Play again?')
