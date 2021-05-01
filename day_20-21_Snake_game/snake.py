@@ -1,5 +1,6 @@
 from turtle import Turtle
 from time import sleep
+from math import ceil
 
 MOVE_DIST = 20
 START_X = 0
@@ -57,4 +58,4 @@ class Snake:
         self.speed *= 2
 
     def speed_down(self, x=0, y=0):
-        self.speed //= 2
+        self.speed = ceil(self.speed / 2)
