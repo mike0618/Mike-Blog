@@ -1,19 +1,27 @@
 from turtle import Screen
 from snake import Snake
 from food import Food, Bonus
-from board import Writebrd, Border
+from board import Writebrd
 from tkinter import messagebox
 from time import sleep
+from buttons import Updown, Leftright, Corner
 
 
 def snake_game():
     screen = Screen()
     screen.clear()
-    screen.setup(880, 560, 520)
+    screen.setup(880, 560)
     screen.bgcolor('#363636')
     screen.title('My PySnake Game')
     screen.tracer(0)
-    Border()
+    up_btn = Updown((0, 372))
+    dn_btn = Updown((0, -372))
+    l_btn = Leftright((-532, 0))
+    r_btn = Leftright((532, 0))
+    intrs_btn = Corner((532, 372))
+    pause_btn = Corner((-532, -372))
+    speed_btn = Corner((532, -372))
+    close_btn = Corner((-532, 372))
 
     messagebox.showinfo("Welcome to PySnake!",
                      "Controls:\n"
@@ -28,16 +36,28 @@ def snake_game():
     scoreboard = Writebrd()
     speedboard = Writebrd()
     pauseboard = Writebrd()
+    Writebrd().write_btn()
+
     screen.listen()
     screen.onkey(snake.up, 'Up')
     screen.onkey(snake.down, 'Down')
     screen.onkey(snake.left, 'Left')
     screen.onkey(snake.right, 'Right')
+    up_btn.onclick(snake.up)
+    dn_btn.onclick(snake.down)
+    l_btn.onclick(snake.left)
+    r_btn.onclick(snake.right)
     screen.onkeypress(snake.speed_up, 'space')
+    speed_btn.onclick(snake.speed_up)
     screen.onkeyrelease(snake.speed_down, 'space')
+    speed_btn.onrelease(snake.speed_down)
     screen.onkey(intrboard.intr_switch, 'i')
+    intrs_btn.onclick(intrboard.intr_switch)
     screen.onkeyrelease(pauseboard.gameover, 'Escape')
+    close_btn.onclick(pauseboard.gameover)
     screen.onkey(pauseboard.pause, 'p')
+    pause_btn.onclick(pauseboard.pause)
+
 
     food = [
         Food(),

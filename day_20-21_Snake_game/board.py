@@ -17,6 +17,14 @@ class Writebrd(Turtle):
         self.on = True
         self.paused = False
 
+    def write_btn(self):
+        self.goto(-675, -372)
+        self.write("PAUSE", False, ALIGN, FONT)
+        self.goto(675, -372)
+        self.write("SPEED", False, ALIGN, FONT)
+        self.goto(-675, 372)
+        self.write("CLOSE", False, ALIGN, FONT)
+
     def writescore(self):
         self.goto(-250, 240)
         self.clear()
@@ -27,7 +35,7 @@ class Writebrd(Turtle):
         self.clear()
         self.write(f"Speed: {num}", False, ALIGN, FONT)
 
-    def gameover(self):
+    def gameover(self, x=0, y=0):
         self.home()
         self.write("GAME OVER", False, ALIGN, FONT)
         self.on = False
@@ -37,32 +45,16 @@ class Writebrd(Turtle):
         self.write("PAUSED", False, ALIGN, FONT)
         self.clear()
 
-    def pause(self):
+    def pause(self, x=0, y=0):
         self.paused = not self.paused
 
     def check_intr(self):
-        self.goto(300, 240)
+        self.goto(290, 240)
         self.clear()
         self.write(f"Intersection allow: {self.intr_allow}", False, ALIGN, FONT)
 
-    def intr_switch(self):
+    def intr_switch(self, x=0, y=0):
         if self.intr_allow == 'NO':
             self.intr_allow = 'YES'
         else:
             self.intr_allow = 'NO'
-
-
-class Border(Turtle):
-    def __init__(self):
-        super().__init__()
-        self.speed('fastest')
-        self.hideturtle()
-        self.color('teal')
-        self.pensize(20)
-        self.penup()
-        self.goto(-X, -Y)
-        self.pendown()
-        self.goto(-X, Y)
-        self.goto(X, Y)
-        self.goto(X, -Y)
-        self.goto(-X, -Y)

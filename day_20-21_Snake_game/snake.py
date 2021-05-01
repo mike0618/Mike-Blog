@@ -41,20 +41,20 @@ class Snake:
         if abs(self.head.heading() - angle) != 180:
             self.head.setheading(angle)
 
-    def left(self):
+    def left(self, x=0, y=0):
         self.direction(180)
 
-    def right(self):
+    def right(self, x=0, y=0):
         self.direction(0)
 
-    def up(self):
+    def up(self, x=0, y=0):
         self.direction(90)
 
-    def down(self):
+    def down(self, x=0, y=0):
         self.direction(270)
 
-    def speed_up(self):
+    def speed_up(self, x=0, y=0):
         self.speed *= 2
 
-    def speed_down(self):
+    def speed_down(self, x=0, y=0):
         self.speed //= 2
