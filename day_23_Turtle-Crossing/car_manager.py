@@ -11,7 +11,10 @@ class CarManager:
 
     def create(self):
         self.y = choice(range(-240, 241, 30))
-        if randint(1, 30 // self.car_speed) == 1 and abs(self.y) > 0:
+        self.lim = 30 // self.car_speed
+        if self.car_speed > 30:
+            self.lim = 1
+        if randint(1, self.lim) == 1 and abs(self.y) > 0:
             car = Turtle('square')
             car.penup()
             car.shapesize(1, 2)
@@ -21,10 +24,12 @@ class CarManager:
             else:
                 car.goto(-320, self.y)
             self.cars.append(car)
+            if len(self.cars) > 50:
+                self.cars.pop(0)
 
 
     def move(self):
-        for car in self.cars[-50:]:
+        for car in self.cars:
             if car.ycor() > 0:
                 car.back(self.car_speed)
             else:
