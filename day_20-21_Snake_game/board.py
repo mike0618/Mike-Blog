@@ -38,7 +38,7 @@ class Writebrd(Turtle):
             self.high_score = self.score
             with open('data.txt', 'w') as f:
                 f.write(str(self.high_score))
-        self.score = 0
+        # self.score = 0
         self.writescore(0)
         self.home()
         self.write("GAME OVER", False, ALIGN, FONT)
