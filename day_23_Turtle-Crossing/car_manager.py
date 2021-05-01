@@ -20,11 +20,11 @@ class CarManager:
                 car.goto(320, self.y)
             else:
                 car.goto(-320, self.y)
-            self.cars.insert(0, car)
+            self.cars.append(car)
 
 
     def move(self):
-        for car in self.cars[:50]:
+        for car in self.cars[-50:]:
             if car.ycor() > 0:
                 car.back(self.car_speed)
             else:
