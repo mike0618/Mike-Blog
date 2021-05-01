@@ -18,7 +18,6 @@ class Writebrd(Turtle):
         self.on = True
         self.paused = False
 
-
     def write_btn(self):
         self.goto(-675, -372)
         self.write("PAUSE", False, ALIGN, FONT)
@@ -29,7 +28,7 @@ class Writebrd(Turtle):
 
     def writescore(self, num):
         self.clear()
-        self.goto(-400, 170)
+        self.goto(-400, 150)
         self.write(
             f"Intersection allow: {self.intr_allow}\nHigh score: {self.high_score}\nScore: {self.score}\nSpeed: {num}",
             False, 'left', FONT)

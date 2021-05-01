@@ -24,17 +24,19 @@ def snake_game():
     close_btn = Corner((532, 372))
 
     messagebox.showinfo("Welcome to PySnake!",
-                     "Controls:\n"
-                     "Turn the snake:       Arrow keys\n"
-                     "Speed-up:                Space\n"
-                     "Intersection allow:   I\n"
-                     "Pause:                    P\n"
-                     "End game:             ESC")
+                        "Controls:\n"
+                        "Turn the snake:       Arrow keys\n"
+                        "Speed-up:                Space\n"
+                        "Intersection allow:   I\n"
+                        "Pause:                    P\n"
+                        "End game:             ESC")
 
     snake = Snake(3)
     scoreboard = Writebrd()
     with open('data.txt') as f:
-        scoreboard.high_score = int(f.read())
+        cont = f.read()
+        if cont.isdigit():
+            scoreboard.high_score = int(cont)
     Writebrd().write_btn()
 
     screen.listen()
@@ -56,7 +58,6 @@ def snake_game():
     close_btn.onclick(scoreboard.gameover)
     screen.onkey(scoreboard.pause, 'p')
     pause_btn.onclick(scoreboard.pause)
-
 
     food = [
         Food(),
@@ -89,19 +90,19 @@ def snake_game():
                     if snake.head.distance(sgm) < 10:
                         scoreboard.gameover()
                         break
+            if scoreboard.paused:
+                scoreboard.writepause()
             if not scoreboard.on:
                 scoreboard.gameover()
 
-        if scoreboard.paused:
-            scoreboard.writepause()
 
     while scoreboard.on:
         play()
+        screen.update()
         sleep(0.2)
 
 
 retry = True
 while retry:
-
     snake_game()
     retry = messagebox.askyesno('PySnake', 'Play again?')
