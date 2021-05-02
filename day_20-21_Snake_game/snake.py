@@ -11,6 +11,7 @@ class Snake:
     def __init__(self, length):
         self.length = length
         self.speed = 3
+        self.speedup =  False
         self.snake = []
         self.x = START_X
         for i in range(self.length):
@@ -59,3 +60,23 @@ class Snake:
 
     def speed_down(self, x=0, y=0):
         self.speed = ceil(self.speed / 2)
+
+    def control(self, x, y):
+        if abs(x) < 80 and abs(y) < 50:
+            if self.speedup:
+                self.speed = ceil(self.speed / 2)
+                self.speedup = False
+            else:
+                self.speed *= 2
+                self.speedup = True
+        elif 420 > x > 0 and abs(y) < x / 1.618:
+            self.direction(0)
+        elif -420 < x < 0 and abs(y) < -x / 1.618:
+            self.direction(180)
+        elif 260 > y > 0 and abs(x) < y * 1.618:
+            self.direction(90)
+        elif -260 < y < 0 and abs(x) < -y * 1.618:
+            self.direction(270)
+
+
+

@@ -18,19 +18,11 @@ class Writebrd(Turtle):
         self.on = True
         self.paused = False
 
-    def write_btn(self):
-        self.goto(-675, -372)
-        self.write("PAUSE", False, ALIGN, FONT)
-        self.goto(675, -372)
-        self.write("SPEED", False, ALIGN, FONT)
-        self.goto(675, 372)
-        self.write("CLOSE", False, ALIGN, FONT)
-
     def writescore(self, num):
         self.clear()
-        self.goto(-400, 150)
+        self.goto(-400, -250)
         self.write(
-            f"Intersection allow: {self.intr_allow}\nHigh score: {self.high_score}\nScore: {self.score}\nSpeed: {num}",
+            f"High score: {self.high_score}\nScore: {self.score}\nSpeed: {num}\nIntersection allow: {self.intr_allow}",
             False, 'left', FONT)
 
     def gameover(self, x=0, y=0):
@@ -57,3 +49,13 @@ class Writebrd(Turtle):
             self.intr_allow = 'YES'
         else:
             self.intr_allow = 'NO'
+
+    def control(self, x, y):
+        if -420 < x < -220 and 260 > y > 140:
+            self.intr_switch()
+        elif 420 > x > 220 and -260 < y < -140:
+            self.paused = not self.paused
+        elif 420 > x > 320 and 260 > y > 200:
+            self.gameover()
+        else:
+            return True

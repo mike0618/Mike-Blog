@@ -4,7 +4,7 @@ from food import Food, Bonus
 from board import Writebrd
 from tkinter import messagebox
 from time import sleep
-from buttons import Updown, Leftright, Corner
+from borders import Borders
 
 
 def snake_game():
@@ -14,14 +14,6 @@ def snake_game():
     screen.bgcolor('#363636')
     screen.title('My PySnake Game')
     screen.tracer(0)
-    up_btn = Updown((0, 372))
-    dn_btn = Updown((0, -372))
-    l_btn = Leftright((-532, 0))
-    r_btn = Leftright((532, 0))
-    intrs_btn = Corner((-532, 372))
-    pause_btn = Corner((-532, -372))
-    speed_btn = Corner((532, -372))
-    close_btn = Corner((532, 372))
 
     messagebox.showinfo("Welcome to PySnake!",
                         "Controls:\n"
@@ -33,31 +25,27 @@ def snake_game():
 
     snake = Snake(3)
     scoreboard = Writebrd()
+    Borders()
     with open('data.txt') as f:
         cont = f.read()
         if cont.isdigit():
             scoreboard.high_score = int(cont)
-    Writebrd().write_btn()
+
+    def control(x, y):
+        if scoreboard.control(x, y):
+            snake.control(x, y)
 
     screen.listen()
     screen.onkey(snake.up, 'Up')
     screen.onkey(snake.down, 'Down')
     screen.onkey(snake.left, 'Left')
     screen.onkey(snake.right, 'Right')
-    up_btn.onclick(snake.up)
-    dn_btn.onclick(snake.down)
-    l_btn.onclick(snake.left)
-    r_btn.onclick(snake.right)
     screen.onkeypress(snake.speed_up, 'space')
-    speed_btn.onclick(snake.speed_up)
     screen.onkeyrelease(snake.speed_down, 'space')
-    speed_btn.onrelease(snake.speed_down)
     screen.onkey(scoreboard.intr_switch, 'i')
-    intrs_btn.onclick(scoreboard.intr_switch)
     screen.onkey(scoreboard.gameover, 'Escape')
-    close_btn.onclick(scoreboard.gameover)
     screen.onkey(scoreboard.pause, 'p')
-    pause_btn.onclick(scoreboard.pause)
+    screen.onclick(control)
 
     food = [
         Food(),
@@ -94,7 +82,6 @@ def snake_game():
                 scoreboard.writepause()
             if not scoreboard.on:
                 scoreboard.gameover()
-
 
     while scoreboard.on:
         play()
