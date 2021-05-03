@@ -25,7 +25,19 @@ def snake_game():
 
     snake = Snake(3)
     scoreboard = Writebrd()
-    Borders()
+    borders = Borders()
+    borders.pause()
+    borders.speedup()
+    borders.intersection()
+    borders.close()
+    borders.uparrow()
+    borders.dnarrow()
+    borders.larrow()
+    borders.rarrow()
+    borders.wrireborders()
+    w_pause = Borders('white')
+    w_speedup = Borders('white')
+    w_intersection = Borders('white')
     with open('data.txt') as f:
         cont = f.read()
         if cont.isdigit():
@@ -73,14 +85,25 @@ def snake_game():
             if abs(snake_x) > 420 or abs(snake_y) > 260:
                 scoreboard.gameover()
             # Detect collision with tail.
-            if scoreboard.intr_allow == 'NO':
+            if not scoreboard.intr_allow:
                 for sgm in snake.snake[1:]:
                     if snake.head.distance(sgm) < 10:
                         scoreboard.gameover()
                         break
-            if scoreboard.paused:
-                scoreboard.writepause()
+            if scoreboard.paused and not w_pause.writed:
+                w_pause.pause()
+            elif w_pause.writed and not scoreboard.paused:
+                w_pause.clear_writed()
+            if snake.speedup and not w_speedup.writed:
+                w_speedup.speedup()
+            elif w_speedup.writed and not snake.speedup:
+                w_speedup.clear_writed()
+            if scoreboard.intr_allow and not w_intersection.writed:
+                w_intersection.intersection()
+            elif w_intersection.writed and not scoreboard.intr_allow:
+                w_intersection.clear_writed()
             if not scoreboard.on:
+                w_pause.close()
                 scoreboard.gameover()
 
     while scoreboard.on:

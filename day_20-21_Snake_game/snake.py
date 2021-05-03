@@ -1,6 +1,7 @@
 from turtle import Turtle
 from time import sleep
 from math import ceil
+from borders import Borders
 
 MOVE_DIST = 20
 START_X = 0
@@ -18,6 +19,7 @@ class Snake:
             self.x -= MOVE_DIST
             self.add_turtle((self.x, START_Y))
         self.head = self.snake[0]
+        self.arrows = Borders('#9D9D9D')
 
     def add_turtle(self, position):
         new_turtle = Turtle(shape='square')
@@ -41,6 +43,18 @@ class Snake:
 
     def direction(self, angle):
         if abs(self.head.heading() - angle) != 180:
+            if angle == 0:
+                self.arrows.clear()
+                self.arrows.rarrow()
+            elif angle == 90:
+                self.arrows.clear()
+                self.arrows.uparrow()
+            elif angle == 180:
+                self.arrows.clear()
+                self.arrows.larrow()
+            elif angle == 270:
+                self.arrows.clear()
+                self.arrows.dnarrow()
             self.head.setheading(angle)
 
     def left(self, x=0, y=0):
@@ -57,12 +71,14 @@ class Snake:
 
     def speed_up(self, x=0, y=0):
         self.speed *= 2
+        self.speedup = True
 
     def speed_down(self, x=0, y=0):
         self.speed = ceil(self.speed / 2)
+        self.speedup = False
 
     def control(self, x, y):
-        if abs(x) < 80 and abs(y) < 50:
+        if 420 > x > 220 and -260 < y < -140:
             if self.speedup:
                 self.speed = ceil(self.speed / 2)
                 self.speedup = False
@@ -70,13 +86,13 @@ class Snake:
                 self.speed *= 2
                 self.speedup = True
         elif 420 > x > 0 and abs(y) < x / 1.618:
-            self.direction(0)
+            self.right()
         elif -420 < x < 0 and abs(y) < -x / 1.618:
-            self.direction(180)
+            self.left()
         elif 260 > y > 0 and abs(x) < y * 1.618:
-            self.direction(90)
+            self.up()
         elif -260 < y < 0 and abs(x) < -y * 1.618:
-            self.direction(270)
+            self.down()
 
 
 
