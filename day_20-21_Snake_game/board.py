@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 ALIGN = 'center'
-FONT = ('Arial', 16, 'normal')
+FONT = ('Arial', 14, 'normal')
 X = 440
 Y = 280
 
@@ -20,7 +20,7 @@ class Writebrd(Turtle):
 
     def writescore(self, num):
         self.clear()
-        self.goto(-350, -260)
+        self.goto(-350, -270)
         self.write(f"HIGH SCORE: {self.high_score}  SCORE: {self.score}  SPEED: {num}", False, 'left', FONT)
 
     def gameover(self, x=0, y=0):
@@ -44,7 +44,7 @@ class Writebrd(Turtle):
         if -420 < x < -220 and 260 > y > 140:
             self.intr_switch()
         elif abs(x) < 100 and abs(y) < 60:
-            self.paused = not self.paused
+            self.pause()
         elif 420 > x > 320 and 260 > y > 200:
             self.gameover()
         else:
