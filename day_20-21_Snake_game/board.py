@@ -21,7 +21,7 @@ class Writebrd(Turtle):
     def writescore(self, num):
         self.clear()
         self.goto(-350, -260)
-        self.write(f"High score: {self.high_score}  Score: {self.score}  Speed: {num}", False, 'left', FONT)
+        self.write(f"HIGH SCORE: {self.high_score}  SCORE: {self.score}  SPEED: {num}", False, 'left', FONT)
 
     def gameover(self, x=0, y=0):
         if self.score > self.high_score:
