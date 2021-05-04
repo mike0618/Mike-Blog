@@ -10,7 +10,7 @@ from borders import Borders
 def snake_game():
     screen = Screen()
     screen.clear()
-    screen.setup(880, 560)
+    screen.setup(910, 590)
     screen.bgcolor('#363636')
     screen.title('My PySnake Game')
     screen.tracer(0)
@@ -82,7 +82,7 @@ def snake_game():
             snake_x = snake.head.xcor()
             snake_y = snake.head.ycor()
             screen.update()
-            if abs(snake_x) > 420 or abs(snake_y) > 260:
+            if abs(snake_x) > 425 or abs(snake_y) > 265:
                 scoreboard.gameover()
             # Detect collision with tail.
             if not scoreboard.intr_allow:
