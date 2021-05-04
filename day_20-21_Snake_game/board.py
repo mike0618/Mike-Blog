@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 ALIGN = 'center'
-FONT = ('Courier', 16, 'normal')
+FONT = ('Arial', 16, 'normal')
 X = 440
 Y = 280
 
@@ -13,23 +13,22 @@ class Writebrd(Turtle):
         self.high_score = 0
         self.intr_allow = False
         self.hideturtle()
-        self.color('yellow')
+        self.color('#9D9D9D')
         self.penup()
         self.on = True
         self.paused = False
 
     def writescore(self, num):
         self.clear()
-        self.goto(-400, -250)
-        self.write(
-            f"High score: {self.high_score}\nScore: {self.score}\nSpeed: {num}",
-            False, 'left', FONT)
+        self.goto(-350, -260)
+        self.write(f"High score: {self.high_score}  Score: {self.score}  Speed: {num}", False, 'left', FONT)
 
     def gameover(self, x=0, y=0):
         if self.score > self.high_score:
             self.high_score = self.score
             with open('data.txt', 'w') as f:
                 f.write(str(self.high_score))
+        self.writescore(0)
         self.on = False
 
     def pause(self, x=0, y=0):
