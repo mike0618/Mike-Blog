@@ -41,22 +41,22 @@ class Borders(Turtle):
         # Intersection button
         self.pensize(10)
         self.penup()
-        self.goto(-220, 280)
+        self.goto(-220, 277)
         self.pendown()
         self.goto(-220, 160)
-        self.goto(-440, 160)
+        self.goto(-437, 160)
         # Close button
         self.penup()
-        self.goto(320, 280)
+        self.goto(320, 277)
         self.pendown()
         self.goto(320, 200)
-        self.goto(440, 200)
+        self.goto(437, 200)
         # Pause button
         self.penup()
-        self.goto(220, -280)
+        self.goto(220, -277)
         self.pendown()
         self.goto(220, -160)
-        self.goto(440, -160)
+        self.goto(437, -160)
         # Speed button
         self.penup()
         self.goto(100, 60)
@@ -79,17 +79,16 @@ class Borders(Turtle):
         self.penup()
         self.goto(-100, -60)
         self.pendown()
-        self.goto(-440, -275)
+        self.goto(-437, -275)
         # Border
         self.penup()
-        self.goto(440, 280)
+        self.goto(437, 277)
         self.color('teal')
-        self.pensize(16)
         self.pendown()
-        self.goto(440, -280)
-        self.goto(-440, -280)
-        self.goto(-440, 280)
-        self.goto(440, 280)
+        self.goto(437, -277)
+        self.goto(-437, -277)
+        self.goto(-437, 277)
+        self.goto(437, 277)
 
     def uparrow(self):
         # Arrows
