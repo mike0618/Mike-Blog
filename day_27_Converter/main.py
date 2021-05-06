@@ -6,9 +6,9 @@ def onclick():
     if radio_state.get():
         k = 1 / k
     try:
-        label3['text'] = round(float(entry.get()) * k, 3)
+        result_label['text'] = round(float(entry.get()) * k, 3)
     except ValueError:
-        label4['text'] = 'Error'
+        error_label['text'] = 'Error'
 
 
 def onradio():
@@ -30,16 +30,16 @@ rb2 = tk.Radiobutton(text='Km to Miles', value=1, variable=radio_state, command=
 rb1.grid(row=0, column=0)
 rb2.grid(row=0, column=1)
 
-label0 = tk.Label(text='is equal to')
-label0.grid(row=2, column=0)
+equal_label = tk.Label(text='is equal to')
+equal_label.grid(row=2, column=0)
 label1 = tk.Label(text='Miles')
 label1.grid(row=1, column=2)
 label2 = tk.Label(text='Km')
 label2.grid(row=2, column=2)
-label3 = tk.Label(text='0')
-label3.grid(row=2, column=1)
-label4 = tk.Label()
-label4.grid(row=4, column=1)
+result_label = tk.Label(text='0')
+result_label.grid(row=2, column=1)
+error_label = tk.Label()
+error_label.grid(row=4, column=1)
 
 entry = tk.Entry(width=10)
 # entry.insert(index=0, string='0')
