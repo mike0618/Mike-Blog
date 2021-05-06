@@ -16,8 +16,9 @@ timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset():
-    global reps
-    window.after_cancel(timer)
+    global reps, timer
+    if timer:
+        window.after_cancel(timer)
     canvas.itemconfig(timer_text, text='00:00')
     label.config(text='Timer', fg=GREEN)
     check_label.config(text='')
@@ -25,6 +26,10 @@ def reset():
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
+def start():
+    if reps == 0:
+        start_timer()
+
 def start_timer():
     global reps
     reps += 1
@@ -77,7 +82,7 @@ check_label = Label(padx=5, pady=5, fg=GREEN, bg=YELLOW, font=(FONT_NAME, 34, 'b
 check_label.grid(row=3, column=1)
 
 startbtn = Button(text='Start', fg=GREEN, bg=YELLOW, activeforeground=GREEN, activebackground=YELLOW,
-                  highlightthickness=0, font=(FONT_NAME, 13, 'bold'), command=start_timer)
+                  highlightthickness=0, font=(FONT_NAME, 13, 'bold'), command=start)
 startbtn.grid(row=2, column=0)
 resetbtn = Button(text='Reset', fg=GREEN, bg=YELLOW, activeforeground=GREEN, activebackground=YELLOW,
                   highlightthickness=0, font=(FONT_NAME, 13, 'bold'), command=reset)
