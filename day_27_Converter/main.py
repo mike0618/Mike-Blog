@@ -7,6 +7,7 @@ def onclick():
         k = 1 / k
     try:
         result_label['text'] = round(float(entry.get()) * k, 3)
+        error_label['text'] = ''
     except ValueError:
         error_label['text'] = 'Error'
 
