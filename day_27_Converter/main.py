@@ -42,7 +42,8 @@ label4 = tk.Label()
 label4.grid(row=4, column=1)
 
 entry = tk.Entry(width=10)
-entry.insert(index=0, string='0')
+# entry.insert(index=0, string='0')
+entry.focus()
 entry.grid(row=1, column=1)
 
 btn = tk.Button(text='Calculate')
