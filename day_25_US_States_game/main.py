@@ -28,6 +28,7 @@ while len(states) > 0:
         states.remove(answer_state)
         write_state(answer_state)
 
+t.color('red')
 for state in states:
     write_state(state)
 df = pandas.DataFrame(states)
