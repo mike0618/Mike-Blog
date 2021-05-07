@@ -20,6 +20,8 @@ def passgen():
     pass_entry.insert(END, password)
     pyperclip.copy(password)
     info_label.config(fg='#499c59', text='New password copied to clipboard')
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     site = site_entry.get()
@@ -31,13 +33,13 @@ def save():
         with open('data.txt') as f:
             for string in f:
                 entry = string.split()
-                if site == entry[0] and login ==entry[1] and passw == entry[2]:
+                if site == entry[0] and login == entry[1] and passw == entry[2]:
                     exists = True
                     info_label.config(fg='#fec269', text='This entry already exists')
                     break
         if not exists:
             is_ok = messagebox.askokcancel(title=site, message=f'These are the details entered:\nLogin: {login}'
-                                                           f'\nPassword: {passw}\nIs it ok to save?')
+                                                               f'\nPassword: {passw}\nIs it ok to save?')
             if is_ok:
                 with open('data.txt', 'a') as f:
                     f.write(f'{site} {login} {passw}\n')
