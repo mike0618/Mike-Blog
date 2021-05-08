@@ -75,7 +75,7 @@ def hide():
     info_label.config(fg='#fec269', text="PIN CLEARED")
 
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
+# ---------------------------- SAVE PASSWORD -------------------------------- #
 def save():
     site = site_combo.get()
     login = login_combo.get()
