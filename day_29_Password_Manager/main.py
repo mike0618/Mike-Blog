@@ -3,7 +3,9 @@ from tkinter import messagebox, ttk
 from string import ascii_lowercase, ascii_uppercase, digits
 from random import randint, choice, shuffle
 import pyperclip
+from pathlib import Path
 
+Path('data.txt').touch(exist_ok=True)
 
 # ---------------------------- ENCRYPTION/DECRYPTION ---------------------------- #
 def crypt(pw, decrypt=False):
@@ -72,6 +74,7 @@ def hide():
     hide_btn.grid_remove()
     info_label.config(fg='#fec269', text="PIN CLEARED")
 
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     site = site_combo.get()
@@ -129,12 +132,14 @@ key_label.grid(row=0, column=2, sticky='s')
 
 def sitelist():
     with open('data.txt') as f:
-        site_combo['values'] = sorted(list(set([s.split()[0] for s in f if s.split()[1] == login_combo.get() or not login_combo.get()])))
+        site_combo['values'] = sorted(
+            list(set([s.split()[0] for s in f if s.split()[1] == login_combo.get() or not login_combo.get()])))
 
 
 def loginlist():
     with open('data.txt') as f:
-        login_combo['values'] = sorted(list(set([s.split()[1] for s in f if s.split()[0] == site_combo.get() or not site_combo.get()])))
+        login_combo['values'] = sorted(
+            list(set([s.split()[1] for s in f if s.split()[0] == site_combo.get() or not site_combo.get()])))
 
 
 site_combo = ttk.Combobox(width=54, postcommand=sitelist)
