@@ -17,7 +17,7 @@ for (index, row) in student_data_frame.iterrows():
     pass
 
 # Keyword Method with iterrows()
-print({row.student:row.score for i, row in student_data_frame.iterrows()})
+print({row.student: row.score for i, row in student_data_frame.iterrows()})
 
 # TODO 1. Create a dictionary in this format:
 # {"A": "Alfa", "B": "Bravo"}
@@ -25,4 +25,10 @@ df = pandas.read_csv('nato_phonetic_alphabet.csv')
 nato_dict = {row.letter: row.code for i, row in df.iterrows()}
 
 # TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-print([nato_dict[letter.upper()] for letter in input('Enter a word: ')])
+while True:
+    try:
+        print([nato_dict[letter.upper()] for letter in input('Enter a word: ')])
+    except KeyError:
+        print('Sorry, only letters in the alphabet please.')
+    else:
+        break
