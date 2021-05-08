@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from string import ascii_lowercase, ascii_uppercase, digits
 from random import randint, choice, shuffle
 import pyperclip
@@ -39,8 +39,8 @@ def passgen():
 
 # ---------------------------- SHOW/HIDE PASSWORDS ------------------------------- #
 def show():
-    site = site_entry.get()
-    login = login_entry.get()
+    site = site_combo.get()
+    login = login_combo.get()
     if site or login:
         info_label.config(text='')
         i_site = ''
@@ -66,6 +66,7 @@ def show():
 
 
 def hide():
+    key_entry.delete(0, END)
     text.grid_remove()
     text.delete(1.0, END)
     hide_btn.grid_remove()
@@ -73,8 +74,8 @@ def hide():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    site = site_entry.get()
-    login = login_entry.get()
+    site = site_combo.get()
+    login = login_combo.get()
     passw = pass_entry.get()
     exists = False
 
@@ -92,10 +93,10 @@ def save():
             if is_ok:
                 with open('data.txt', 'a') as f:
                     f.write(f'{site} {login} {crypt(passw)}\n')
-                    login_entry.delete(0, END)
+                    login_combo.delete(0, END)
                     pass_entry.delete(0, END)
                     info_label.config(fg='#499c59', text=f'Entry for {site} added')
-                    site_entry.delete(0, END)
+                    site_combo.delete(0, END)
     else:
         info_label.config(fg='#fec269', text='Fill out the form')
 
@@ -125,25 +126,37 @@ info_label.grid(row=7, column=1, columnspan=2)
 key_label = Label(text='PIN:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
 key_label.grid(row=0, column=2, sticky='s')
 
-site_entry = Entry(width=55)
-site_entry.focus()
-site_entry.grid(row=2, column=1, columnspan=2)
-login_entry = Entry(width=55)
-login_entry.grid(row=3, column=1, columnspan=2)
+
+def sitelist():
+    with open('data.txt') as f:
+        site_combo['values'] = sorted(list(set([s.split()[0] for s in f])))
+
+
+def loginlist():
+    with open('data.txt') as f:
+        login_combo['values'] = sorted(list(set([s.split()[1] for s in f if s.split()[0] == site_combo.get()])))
+
+
+site_combo = ttk.Combobox(width=54, postcommand=sitelist)
+site_combo.focus()
+site_combo.grid(pady=3, row=2, column=1, columnspan=2, sticky='w')
+login_combo = ttk.Combobox(width=54, postcommand=loginlist)
+login_combo.grid(row=3, column=1, columnspan=2, sticky='w')
+
 pass_entry = Entry(width=34)
-pass_entry.grid(row=4, column=1)
+pass_entry.grid(row=4, column=1, sticky='w')
 key_entry = Entry(width=20, fg='white', bg='white')
 key_entry.grid(row=1, column=2, sticky='n')
 
-gen_btn = Button(padx=42, pady=1, text="Generate", anchor='s', highlightthickness=0, fg='white', bg='#363636',
+gen_btn = Button(padx=43, pady=1, text="Generate", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                  activeforeground='white', activebackground='#595959', font=('Courier', 13, 'normal'), command=passgen)
 gen_btn.grid(row=4, column=2)
 show_btn = Button(padx=118, pady=1, text="Show", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                   activeforeground='white', activebackground='#7d5d30', font=('Courier', 13, 'normal'), command=show)
-show_btn.grid(row=5, column=1)
+show_btn.grid(row=5, column=1, sticky='w')
 hide_btn = Button(padx=24, pady=1, text="Hide", anchor='s', highlightthickness=0, fg='white', bg='#7d5d30',
                   activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=hide)
-add_btn = Button(padx=66, pady=1, text="Add", anchor='s', highlightthickness=0, fg='white', bg='#363636',
+add_btn = Button(padx=68, pady=1, text="Add", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                  activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=save)
 add_btn.grid(pady=3, row=5, column=2)
 
