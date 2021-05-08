@@ -75,6 +75,7 @@ tomato = PhotoImage(file='tomato.png')
 canvas.create_image(150, 154, image=tomato)
 timer_text = canvas.create_text(150, 180, text='00:00', fill=YELLOW, font=(FONT_NAME, 55, 'bold'))
 canvas.grid(row=1, column=1)
+window.iconphoto(False, tomato)
 
 label = Label(padx=5, pady=5, text='Timer', fg=GREEN, bg=YELLOW, font=(FONT_NAME, 34, 'bold'))
 label.grid(row=0, column=1)
