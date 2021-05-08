@@ -70,7 +70,7 @@ def hide():
     text.grid_remove()
     text.delete(1.0, END)
     hide_btn.grid_remove()
-
+    info_label.config(fg='#fec269', text="PIN CLEARED")
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
