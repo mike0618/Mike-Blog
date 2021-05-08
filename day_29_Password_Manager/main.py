@@ -102,9 +102,11 @@ def save():
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
+icon = PhotoImage(file='icon.png')
 window.title('Password Manager')
 # window.minsize(width=600, height=500)
 window.config(padx=30, pady=20, bg='#363636')
+window.iconphoto(False, icon)
 
 canvas = Canvas(width=320, height=140, bg='#363636', highlightthickness=0)
 logo = PhotoImage(file='key.png')
