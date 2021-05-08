@@ -7,6 +7,7 @@ from pathlib import Path
 
 Path('data.txt').touch(exist_ok=True)
 
+
 # ---------------------------- ENCRYPTION/DECRYPTION ---------------------------- #
 def crypt(pw, decrypt=False):
     k = 1
