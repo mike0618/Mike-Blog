@@ -52,9 +52,9 @@ def show():
             for string in f:
                 entry = string.split()
                 if site == entry[0]:
-                    i_site += f'{entry[1]} : {crypt(entry[2], True)}\n'
+                    i_site += f'{entry[1]} : {crypt(entry[-1], True)}\n'
                 if login == entry[1]:
-                    i_login += f'{entry[0]} : {crypt(entry[2], True)}\n'
+                    i_login += f'{entry[0]} : {crypt(entry[-1], True)}\n'
         text.focus()
         text.delete(1.0, END)
         if i_site:
@@ -119,12 +119,12 @@ canvas.create_image(160, 70, image=logo)
 logo_text = canvas.create_text(200, 45, text='My Pass', fill='#fec269', font=('Courier', 21, 'bold italic'))
 canvas.grid(row=0, column=0, columnspan=2, rowspan=2)
 
-site_label = Label(pady=5, text=' Website:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
-site_label.grid(row=2, column=0)
-login_label = Label(pady=5, text='   Login:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
-login_label.grid(row=3, column=0)
+site_label = Label(pady=5, text='Website:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
+site_label.grid(row=2, column=0, sticky='e')
+login_label = Label(pady=5, text='Login:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
+login_label.grid(row=3, column=0, sticky='e')
 pass_label = Label(pady=5, text='Password:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
-pass_label.grid(row=4, column=0)
+pass_label.grid(row=4, column=0, sticky='e')
 info_label = Label(pady=5, text='', fg='#499c59', bg='#363636', font=('Courier', 13, 'bold'))
 info_label.grid(row=7, column=1, columnspan=2)
 key_label = Label(text='SECRET WORD:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
