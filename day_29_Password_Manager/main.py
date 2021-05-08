@@ -10,17 +10,17 @@ Path('data.txt').touch(exist_ok=True)
 
 # ---------------------------- ENCRYPTION/DECRYPTION ---------------------------- #
 def crypt(pw, decrypt=False):
-    k = 1
-    if decrypt:
-        k = -1
     key = key_entry.get()
     password = ''
-    if key.isdigit():
-        for i in range(len(pw)):
-            password += chr(ord(pw[i]) + k * int(key[i % len(key)]))
-        return password
-    else:
-        return pw
+    if key:
+        if decrypt:
+            pw = pw.split('/')[:-1]
+            for i in range(len(pw)):
+                password += chr(int(pw[i]) ^ ord(key[i % len(key)]))
+        else:
+            for i in range(len(pw)):
+                password += f'{ord(pw[i]) ^ ord(key[i % len(key)])}/'
+    return password
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -73,7 +73,7 @@ def hide():
     text.grid_remove()
     text.delete(1.0, END)
     hide_btn.grid_remove()
-    info_label.config(fg='#fec269', text="PIN CLEARED")
+    info_label.config(fg='#fec269', text="SECRET WORD CLEARED")
 
 
 # ---------------------------- SAVE PASSWORD -------------------------------- #
@@ -109,7 +109,7 @@ def save():
 window = Tk()
 icon = PhotoImage(file='icon.png')
 window.title('Password Manager')
-# window.minsize(width=600, height=500)
+window.minsize(width=600, height=310)
 window.config(padx=30, pady=20, bg='#363636')
 window.iconphoto(False, icon)
 
@@ -127,7 +127,7 @@ pass_label = Label(pady=5, text='Password:', fg='white', bg='#363636', font=('Co
 pass_label.grid(row=4, column=0)
 info_label = Label(pady=5, text='', fg='#499c59', bg='#363636', font=('Courier', 13, 'bold'))
 info_label.grid(row=7, column=1, columnspan=2)
-key_label = Label(text='PIN:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
+key_label = Label(text='SECRET WORD:', fg='white', bg='#363636', font=('Courier', 13, 'bold'))
 key_label.grid(row=0, column=2, sticky='s')
 
 
