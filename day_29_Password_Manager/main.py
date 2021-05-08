@@ -83,11 +83,11 @@ def save():
     passw = pass_entry.get()
     exists = False
 
-    if site and login and passw:
+    if site and login and passw and key_entry.get():
         with open('data.txt') as f:
             for string in f:
                 entry = string.split()
-                if site == entry[0] and login == entry[1] and passw == crypt(entry[2]):
+                if site == entry[0] and login == entry[1] and passw == crypt(entry[-1], True):
                     exists = True
                     info_label.config(fg='#fec269', text='This entry already exists')
                     break
