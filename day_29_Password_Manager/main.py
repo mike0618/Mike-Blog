@@ -55,9 +55,9 @@ def show():
         text.focus()
         text.delete(1.0, END)
         if i_site:
-            text.insert(END, f'{site}\n{i_site}\n')
+            text.insert(END, '*' * 50 + f'\n{site}\n{i_site}\n')
         if i_login:
-            text.insert(END, f'{login}\n{i_login}\n')
+            text.insert(END, '*' * 50 + f'\n{login}\n{i_login}\n')
         text.grid(row=6, column=0, columnspan=3)
         hide_btn.grid(row=5, column=0)
     else:
@@ -129,12 +129,12 @@ key_label.grid(row=0, column=2, sticky='s')
 
 def sitelist():
     with open('data.txt') as f:
-        site_combo['values'] = sorted(list(set([s.split()[0] for s in f])))
+        site_combo['values'] = sorted(list(set([s.split()[0] for s in f if s.split()[1] == login_combo.get() or not login_combo.get()])))
 
 
 def loginlist():
     with open('data.txt') as f:
-        login_combo['values'] = sorted(list(set([s.split()[1] for s in f if s.split()[0] == site_combo.get()])))
+        login_combo['values'] = sorted(list(set([s.split()[1] for s in f if s.split()[0] == site_combo.get() or not site_combo.get()])))
 
 
 site_combo = ttk.Combobox(width=54, postcommand=sitelist)
