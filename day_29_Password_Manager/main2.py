@@ -86,6 +86,8 @@ def hide():
 
 # ---------------------------- SAVE PASSWORD -------------------------------- #
 def save():
+    text.grid_remove()
+    text.delete(1.0, END)
     site = site_combo.get()
     login = login_combo.get()
     passw = pass_entry.get()
@@ -108,7 +110,6 @@ def save():
             pass_entry.delete(0, END)
             info_label.config(fg='#499c59', text=f'Entry for {site} added')
             site_combo.delete(0, END)
-            text.delete(1.0, END)
     else:
         info_label.config(fg='#fec269', text='Fill out the form')
 
@@ -146,10 +147,13 @@ def sitelist():
 
 
 def loginlist():
+    login_combo['values'] = []
     if site_combo.get():
         with open('data.json') as f:
-            data = json.load(f)[site_combo.get()]
-            login_combo['values'] = sorted([login for login in data.keys()])
+            data = json.load(f)
+            if site_combo.get() in data:
+                data = data[site_combo.get()]
+                login_combo['values'] = sorted([login for login in data.keys()])
 
 
 site_combo = ttk.Combobox(width=54, postcommand=sitelist)
