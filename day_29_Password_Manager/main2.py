@@ -54,7 +54,7 @@ def passgen():
 
 # ---------------------------- SHOW/HIDE PASSWORDS ------------------------------- #
 def show():
-    text.delete(1.0, END)
+    pass_entry.delete(0, END)
     site = site_combo.get()
     login = login_combo.get()
     if site and login:
@@ -63,34 +63,27 @@ def show():
             data = json.load(f)
             if site in data and login in data[site]:
                 pw = data[site][login]
-                insert = '*' * 50 + f'\nWebsite: {site}\nLogin: {login}\nPassword: '
                 if key_entry.get():
-                    text.insert(END, insert + f'{crypt(pw, True)}\n' + '*' * 50)
+                    pass_entry.insert(0, crypt(pw, True))
+                    pyperclip.copy(crypt(pw, True))
+                    info_label.config(fg='#499c59', text='Your password copied to clipboard')
                 else:
-                    text.insert(END, insert + 'Please enter a SECRET WORD\n' + '*' * 50)
-                text.grid(row=6, column=0, columnspan=3)
-                text.focus()
+                    pass_entry.insert(0, 'Please enter a SECRET WORD')
             else:
                 info_label.config(fg='#fec269', text='Nothing to show')
-                text.grid_remove()
     else:
         info_label.config(fg='#fec269', text='Fill out the "Website" and "Login" fields')
-        text.grid_remove()
 
 
 def hide():
     key_entry.delete(0, END)
     pass_entry.delete(0, END)
     login_combo.delete(0, END)
-    text.grid_remove()
-    text.delete(1.0, END)
     info_label.config(fg='#fec269', text="SECRET WORD CLEARED")
 
 
 # ---------------------------- SAVE PASSWORD -------------------------------- #
 def save():
-    text.grid_remove()
-    text.delete(1.0, END)
     site = site_combo.get()
     login = login_combo.get()
     passw = pass_entry.get()
@@ -182,7 +175,5 @@ hide_btn.grid(row=5, column=0)
 add_btn = Button(padx=68, pady=1, text="Add", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                  activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=save)
 add_btn.grid(pady=3, row=5, column=2)
-
-text = Text(width=67, height=5)
 
 window.mainloop()
