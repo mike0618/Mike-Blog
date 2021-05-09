@@ -3,7 +3,7 @@ from tkinter import *
 # ---------------------------- CONSTANTS ------------------------------- #
 LIGHTRED = "#de6463"
 RED = "#c30202"
-GREEN = "#2f4320"  # #62831e  #9bdeac
+GREEN = "#2f4320"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
 WORK_MIN = 25
@@ -30,6 +30,7 @@ def start():
     if reps == 0:
         start_timer()
 
+
 def start_timer():
     global reps
     reps += 1
@@ -50,12 +51,7 @@ def start_timer():
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def countdown(count):
     minutes, seconds = divmod(count, 60)
-    if seconds < 10:
-        seconds = f'0{seconds}'
-    if minutes < 10:
-        minutes = f'0{minutes}'
-
-    canvas.itemconfig(timer_text, text=f'{minutes}:{seconds}')
+    canvas.itemconfig(timer_text, text=f"{f'0{minutes}'[-2:]}:{f'0{seconds}'[-2:]}")
     if count > 0:
         global timer
         timer = window.after(1000, countdown, count - 1)
