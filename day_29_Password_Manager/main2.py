@@ -63,8 +63,11 @@ def show():
             data = json.load(f)
             if site in data and login in data[site]:
                 pw = data[site][login]
-                text.insert(END,
-                            '*' * 50 + f'\nWebsite: {site}\nLogin: {login}\nPassword: {crypt(pw, True)}\n' + '*' * 50)
+                insert = '*' * 50 + f'\nWebsite: {site}\nLogin: {login}\nPassword: '
+                if key_entry.get():
+                    text.insert(END, insert + f'{crypt(pw, True)}\n' + '*' * 50)
+                else:
+                    text.insert(END, insert + 'Please enter a SECRET WORD\n' + '*' * 50)
                 text.grid(row=6, column=0, columnspan=3)
                 text.focus()
             else:
