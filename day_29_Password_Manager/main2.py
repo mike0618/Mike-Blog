@@ -54,6 +54,7 @@ def passgen():
 
 # ---------------------------- SHOW/HIDE PASSWORDS ------------------------------- #
 def show():
+    text.delete(1.0, END)
     site = site_combo.get()
     login = login_combo.get()
     if site and login:
@@ -62,22 +63,24 @@ def show():
             data = json.load(f)
             if site in data and login in data[site]:
                 pw = data[site][login]
-                text.delete(1.0, END)
                 text.insert(END,
                             '*' * 50 + f'\nWebsite: {site}\nLogin: {login}\nPassword: {crypt(pw, True)}\n' + '*' * 50)
                 text.grid(row=6, column=0, columnspan=3)
-                hide_btn.grid(row=5, column=0)
                 text.focus()
+            else:
+                info_label.config(fg='#fec269', text='Nothing to show')
+                text.grid_remove()
     else:
-        text.delete(1.0, END)
         info_label.config(fg='#fec269', text='Fill out the "Website" and "Login" fields')
+        text.grid_remove()
 
 
 def hide():
     key_entry.delete(0, END)
+    pass_entry.delete(0, END)
+    login_combo.delete(0, END)
     text.grid_remove()
     text.delete(1.0, END)
-    hide_btn.grid_remove()
     info_label.config(fg='#fec269', text="SECRET WORD CLEARED")
 
 
@@ -168,6 +171,7 @@ show_btn = Button(padx=118, pady=1, text="Show", anchor='s', highlightthickness=
 show_btn.grid(row=5, column=1, sticky='w')
 hide_btn = Button(padx=24, pady=1, text="Hide", anchor='s', highlightthickness=0, fg='white', bg='#7d5d30',
                   activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=hide)
+hide_btn.grid(row=5, column=0)
 add_btn = Button(padx=68, pady=1, text="Add", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                  activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=save)
 add_btn.grid(pady=3, row=5, column=2)
