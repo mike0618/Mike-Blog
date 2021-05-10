@@ -21,6 +21,10 @@ def i_khow():
         df = pd.DataFrame(cards)
         df.to_csv('./data/words_to_learn.csv', index=False)
         next_card()
+    else:
+        window.after_cancel(flip_timer)
+        canvas.itemconfig(card_title, text='Congratulations!', fill='#df0046')
+        canvas.itemconfig(card_word, text="You've got it!", fill='#df0046')
 
 
 def next_card():
@@ -33,12 +37,12 @@ def next_card():
         canvas.itemconfig(card_title, text='French', fill='black')
         canvas.itemconfig(card_word, text=card['French'], fill='black')
 
-    def flip_card():
-        canvas.itemconfig(canvas_image, image=image_back)
-        canvas.itemconfig(card_title, text='English', fill='white')
-        canvas.itemconfig(card_word, text=card['English'], fill='white')
+        def flip_card():
+            canvas.itemconfig(canvas_image, image=image_back)
+            canvas.itemconfig(card_title, text='English', fill='white')
+            canvas.itemconfig(card_word, text=card['English'], fill='white')
 
-    flip_timer = window.after(3000, flip_card)
+        flip_timer = window.after(3000, flip_card)
 
 
 # ====================== UI SETUP ============================== #
