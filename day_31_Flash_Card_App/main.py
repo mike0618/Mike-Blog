@@ -14,6 +14,7 @@ else:
 cards = df.to_dict(orient='records')
 card = {}
 
+
 # ====================== FUNCTIONS ============================ #
 def i_khow():
     if cards:
@@ -21,10 +22,6 @@ def i_khow():
         df = pd.DataFrame(cards)
         df.to_csv('./data/words_to_learn.csv', index=False)
         next_card()
-    else:
-        window.after_cancel(flip_timer)
-        canvas.itemconfig(card_title, text='Congratulations!', fill='#df0046')
-        canvas.itemconfig(card_word, text="You've got it!", fill='#df0046')
 
 
 def next_card():
@@ -43,6 +40,10 @@ def next_card():
             canvas.itemconfig(card_word, text=card['English'], fill='white')
 
         flip_timer = window.after(3000, flip_card)
+    else:
+        window.after_cancel(flip_timer)
+        canvas.itemconfig(card_title, text='Congratulations!', fill='#df0046')
+        canvas.itemconfig(card_word, text="You've got it!", fill='#df0046')
 
 
 # ====================== UI SETUP ============================== #
