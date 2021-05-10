@@ -42,8 +42,8 @@ def next_card():
         flip_timer = window.after(3000, flip_card)
     else:
         window.after_cancel(flip_timer)
-        canvas.itemconfig(card_title, text='Congratulations!', fill='#df0046')
-        canvas.itemconfig(card_word, text="You've got it!", fill='#df0046')
+        canvas.itemconfig(card_title, text='Congratulations!', fill='#ed3359')
+        canvas.itemconfig(card_word, text="You've got it!", fill='#ed3359')
 
 
 # ====================== UI SETUP ============================== #
