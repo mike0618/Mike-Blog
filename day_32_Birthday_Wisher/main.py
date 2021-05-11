@@ -15,12 +15,9 @@ EMAIL = 'mail@yahoo.com'
 PWD = 'password'
 
 now = dt.datetime.now()
-today = now.day
-month = now.month
-
 df = pd.read_csv('birthdays.csv')
-df = df[df.day == today]
-df = df[df.month == month]
+df = df[df.month == now.month]
+df = df[df.day == now.day]
 
 for i, row in df.iterrows():
     with open(f'letter_templates/letter_{randint(1, 3)}.txt') as f:
