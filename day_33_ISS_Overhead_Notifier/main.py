@@ -4,13 +4,15 @@ from time import sleep
 from datetime import datetime, timezone
 from config import MY_LAT, MY_LNG, EMAIL, EMAIL_TO, PWD, parameters
 
+response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+response.raise_for_status()
+data = response.json()
+sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+print(sunrise, sunset)
+
 
 def dark():
-    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-    response.raise_for_status()
-    data = response.json()
-    sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-    sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
     hour_now = datetime.now(timezone.utc).hour
     if sunrise < sunset:
         return hour_now < sunrise or hour_now > sunset
@@ -31,11 +33,11 @@ def send_email():
 while True:
     sleep(60)
     if dark():
-        response2 = requests.get(url="http://api.open-notify.org/iss-now.json")
-        response2.raise_for_status()
-        data2 = response2.json()
-        iss_latitude = float(data2["iss_position"]["latitude"])
-        iss_longitude = float(data2["iss_position"]["longitude"])
+        response = requests.get(url="http://api.open-notify.org/iss-now.json")
+        response.raise_for_status()
+        data = response.json()
+        iss_latitude = float(data["iss_position"]["latitude"])
+        iss_longitude = float(data["iss_position"]["longitude"])
 
         if (MY_LAT - 5 <= iss_latitude <= MY_LAT + 5) and (MY_LNG - 5 <= iss_longitude <= MY_LNG + 5):
             print(f"Look up!👆 ISS is overhead right now!\n"
