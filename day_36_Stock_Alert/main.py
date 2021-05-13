@@ -1,7 +1,6 @@
 import requests
 import smtplib
 from my_config import EMAIL, EMAIL_TO, PWD, av_key, newsapi_key  # , auth_token, account_sid, twilio_phone, my_phone
-
 # import os
 # from twilio.rest import Client
 
@@ -21,7 +20,7 @@ alphavantage = 'https://www.alphavantage.co/query'
 av_prm = {'function': 'TIME_SERIES_DAILY',
           'symbol': STOCK,
           'outputsize': 'compact',
-          'apikey': av_key}
+          'apikey': av_key, }
 
 # STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").

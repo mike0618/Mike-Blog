@@ -241,6 +241,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/day_37_Habit_Tracker/main.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/my_config.py">
           <value>
             <Attribute>
