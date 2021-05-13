@@ -47,7 +47,7 @@ while True:
         w_id = int(w_data['weather'][0]['id'])
         print(email, lat, lng, sunrise, hour_now, sunset, w_id)
 
-        if dark() and w_id in range(800, 802):
+        if dark() and w_id in range(800, 804):
             iss_resp = requests.get(url="http://api.open-notify.org/iss-now.json")
             iss_resp.raise_for_status()
             data = iss_resp.json()
@@ -56,7 +56,7 @@ while True:
 
             if (lat - 5 <= iss_lat <= lat + 5) and (lng - 5 <= iss_lng <= lng + 5):
                 print(f"Look up!👆 ISS is overhead right now!\n"
-                      f"Time: {hour_now+3}:{minute_now}\n"
+                      f"Time: {hour_now}:{minute_now}\n"
                       f"Latitude:{iss_lat}\nLongitude:{iss_lng}")
                 send_email()
             else:
