@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 
 # Creating a new window and configurations
 window = Tk()
@@ -97,4 +98,13 @@ for item in fruits:
     listbox.insert(fruits.index(item), item)
 listbox.bind("<<ListboxSelect>>", listbox_used)
 listbox.pack()
+
+# Combobox
+def combo_used(event):
+    print(combo.get())
+
+combo = ttk.Combobox(window, values=fruits)
+combo.bind('<<ComboboxSelected>>', combo_used)
+combo.pack()
+
 window.mainloop()
