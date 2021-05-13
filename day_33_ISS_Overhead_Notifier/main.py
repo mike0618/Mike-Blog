@@ -2,7 +2,7 @@ import requests
 import smtplib
 from time import sleep
 from datetime import datetime
-from my_config import mail_dict, EMAIL, PWD, owm_key, OWM_Endpoint
+from config import mail_dict, EMAIL, PWD, owm_key, OWM_Endpoint
 
 
 def dark():
