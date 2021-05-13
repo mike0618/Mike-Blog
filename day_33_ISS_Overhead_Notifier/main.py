@@ -56,7 +56,7 @@ while True:
 
             if (lat - 5 <= iss_lat <= lat + 5) and (lng - 5 <= iss_lng <= lng + 5):
                 print(f"Look up!👆 ISS is overhead right now!\n"
-                      f"Time: {hour_now+3}:{minute_now}\n"
+                      f"Time: {hour_now}:{minute_now}\n"
                       f"Latitude:{iss_lat}\nLongitude:{iss_lng}")
                 send_email()
             else:
