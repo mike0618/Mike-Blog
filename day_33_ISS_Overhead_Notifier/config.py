@@ -1,10 +1,11 @@
-MY_LAT = 59.934280  # Your latitude
-MY_LNG = 30.335098  # Your longitude
+MY_LAT = 0  # Your latitude
+MY_LNG = 0  # Your longitude
 
-EMAIL = 'mike0618dev@yahoo.com'
-EMAIL_TO = 'mail@gmail.com'
-PWD = 'password'
+EMAIL = 'your_email@yahoo.com'
+EMAIL_TO = 'email@gmail.com'
+PWD = 'password'  # yahoo for app
 
-parameters = {"lat": MY_LAT,
-              "lng": MY_LNG,
-              "formatted": 0, }
+OWM_Endpoint = 'https://api.openweathermap.org/data/2.5/onecall'
+owm_key = 'your key here'
+
+mail_dict = {EMAIL_TO: (MY_LAT, MY_LNG), 'other@gmail.com': (12.345678, 12.345678)}
