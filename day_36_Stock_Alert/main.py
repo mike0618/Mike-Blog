@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 import requests
 import smtplib
 from my_config import EMAIL, EMAIL_TO, PWD, av_key, newsapi_key  # , auth_token, account_sid, twilio_phone, my_phone
@@ -28,12 +27,11 @@ av_prm = {'function': 'TIME_SERIES_DAILY',
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 resp = requests.get(alphavantage, params=av_prm)
 resp.raise_for_status()
+data = resp.json()['Time Series (Daily)']
+data_lst = [value for key, value in data.items()]
 
-yesterday = datetime.now().date() - timedelta(days=1)
-before_yesterday = datetime.now().date() - timedelta(days=2)
-
-yesterday_close = float(resp.json()['Time Series (Daily)'][str(yesterday)]['4. close'])
-before_yesterday_close = float(resp.json()['Time Series (Daily)'][str(before_yesterday)]['4. close'])
+yesterday_close = float(data_lst[0]['4. close'])
+before_yesterday_close = float(data_lst[1]['4. close'])
 
 price_delta = yesterday_close - before_yesterday_close
 percent_delta = 100 * price_delta / yesterday_close
@@ -54,10 +52,10 @@ if abs(percent_delta) > 4:
         news = resp.json()['articles']  # list
 
         # STEP 3: Use https://www.twilio.com
-        # Send a seperate message with the percentage change and each article's title and description to your phone number.
+        # Send a seperate message with the percentage change and each article's title and description to your phone.
         for article in news:
             msg = f"Share info from {point}\n{STOCK}: {percent_delta:.2f}%\nHeadline: {article['title']}\n" \
-                  f"Brief: {article['description']}\nPublished: {article['publishedAt']}"
+                  f"Brief: {article['description']}\nPublished: {article['publishedAt']}".replace(u'\xa0', u' ')
             # client = Client(account_sid, auth_token)
             # message = client.messages.create(body=msg,
             #                                  from_=twilio_phone,
