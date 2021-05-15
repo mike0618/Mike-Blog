@@ -1,2 +1,2 @@
-# 100_days_of_Python
-My study course implementation
+# 100_Days_of_Code
+My study Python course implementation
