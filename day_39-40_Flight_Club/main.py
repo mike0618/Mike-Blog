@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from notification_manager import NotificationManager
 from pprint import pprint
 
-ORIGIN_CITY_IATA = "LON"  # 'DME, SVO, VKO, LED, KRR, STW, MRV'
+ORIGIN_CITY_IATA = "LON"  # 'DME, SVO, VKO, LED'
 
 datamanager = DataManager()
 flightsearch = FlightSearch()

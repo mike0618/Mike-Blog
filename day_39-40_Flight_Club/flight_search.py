@@ -7,7 +7,7 @@ TEQUILA_ENDP = 'https://tequila-api.kiwi.com'
 
 
 class FlightSearch:
-    #This class is responsible for talking to the Flight Search API.
+    # This class is responsible for talking to the Flight Search API.
     def get_iatacode(self, city):
         prm = {'term': city,
                'location_types': 'city',
@@ -25,7 +25,7 @@ class FlightSearch:
                'max_stopovers': 0,
                'nights_in_dst_from': 7,
                'nights_in_dst_to': 28,
-               'one_for_city': 1,}
+               'one_for_city': 1, }
         resp = requests.get(f'{TEQUILA_ENDP}/v2/search', headers=T_HEADERS, params=prm)
         data = resp.json().get('data')
 
@@ -52,7 +52,7 @@ class FlightSearch:
                                     stop_overs=prm['max_stopovers'] // 2,
                                     via_city=route['cityTo'],
                                     out_date=route['local_departure'].split('T')[0],
-                                    return_date=data['route'][-1]['local_departure'].split('T')[0],)
+                                    return_date=data['route'][-1]['local_departure'].split('T')[0], )
             print(f'{flightdata.origin_city} - {flightdata.dest_city}: ${flightdata.price} from {flightdata.via_city}')
             return flightdata
         except (TypeError, IndexError):

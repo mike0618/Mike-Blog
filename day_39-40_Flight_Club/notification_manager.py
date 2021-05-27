@@ -5,7 +5,7 @@ from flight_data import FlightData
 
 
 class NotificationManager:
-    #This class is responsible for sending notifications with the deal flight details.
+    # This class is responsible for sending notifications with the deal flight details.
     def send_msg(self, flight: FlightData, email, name):
         msg = f'Hello {name}! Only ${flight.price} to fly from {flight.origin_city}-{flight.origin_airport}' \
               f' to {flight.dest_city}-{flight.dest_airport}, from {flight.out_date} to {flight.return_date}'
