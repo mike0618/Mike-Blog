@@ -1,12 +1,13 @@
 import requests
 from flight_search import FlightSearch
-from my_conf import S_ENDP, S_HEADERS
+from my_conf import S_ENDP, S_HEADERS, SU_ENDP
 
 
 class DataManager:
     #This class is responsible for talking to the Google Sheet.
     def __init__(self):
         self.sheet_data = requests.get(S_ENDP, headers=S_HEADERS).json()['prices']
+        self.user_data = requests.get(SU_ENDP, headers=S_HEADERS).json()['users']
 
     def write_iata(self, flightsearch: FlightSearch):
         for entry in self.sheet_data:
