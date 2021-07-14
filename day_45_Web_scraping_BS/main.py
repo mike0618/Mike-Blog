@@ -79,8 +79,7 @@ movies = movies[::-1]
 # print(movies)
 
 with open('100movies.txt', 'w') as f:
-    for i in range(len(movies)):
-        movie = movies[i]
+    for i, movie in enumerate(movies):
         if ')' in movie:
             movie = movie[movie.index(')')+2:]
         f.write(f'{i + 1}) {movie}\n')
