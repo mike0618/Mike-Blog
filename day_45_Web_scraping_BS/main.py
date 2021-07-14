@@ -74,10 +74,13 @@ target = data['props']['pageProps']['apolloState']
 movies = []
 for k, v in target.items():
     if 'ImageMeta' in k:
-        movies.append(v['altText'])
+        movies.append(v['titleText'])
 movies = movies[::-1]
 # print(movies)
 
 with open('100movies.txt', 'w') as f:
     for i in range(len(movies)):
-        f.write(f'{i + 1}) {movies[i]}\n')
+        movie = movies[i]
+        if ')' in movie:
+            movie = movie[movie.index(')')+2:]
+        f.write(f'{i + 1}) {movie}\n')
