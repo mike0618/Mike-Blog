@@ -1,8 +1,7 @@
 from selenium import webdriver
 from my_conf import chromedriver_path, LOGIN, PASS, LINK
 from time import sleep
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 
 # --- INITIALIZATION
 driver = webdriver.Chrome(chromedriver_path)
@@ -36,8 +35,9 @@ sleep(0.5)
 driver.find_element_by_xpath('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/'
                              'div/div/button').click()
 sleep(2)
-pass_field = driver.find_element_by_xpath('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form'
-                                          '/span/section/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input')
+pass_field = driver.find_element_by_xpath(
+    '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/'
+    'form/span/section/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input')
 pass_field.send_keys(PASS)
 sleep(0.5)
 driver.find_element_by_xpath('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]'
