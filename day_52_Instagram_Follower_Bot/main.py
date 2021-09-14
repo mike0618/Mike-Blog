@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.common.exceptions import ElementClickInterceptedException
 from my_conf import chromedriver_path, LOGIN, PASS, SIMILAR_ACCOUNT
 from time import sleep
 from random import randint
@@ -42,7 +41,7 @@ class InstaFollower:
         followers_lnk.click()
         sleep(3)
         popup = self.driver.find_element_by_xpath('/html/body/div[6]/div/div/div[2]')
-        # for i in range(5):
+        # for i in range(10):
         for i in range(int(number_followers) // 12):
             sleep(randint(1000, 1600) / 1000)
             self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", popup)
@@ -51,11 +50,9 @@ class InstaFollower:
         sleep(5)
         followers = self.driver.find_elements_by_css_selector('li button')
         for follower in followers:
-            sleep(randint(1000, 1600) / 1000)
-            try:
+            if follower.text == 'Follow':
+                sleep(randint(1000, 1600) / 1000)
                 follower.click()
-            except ElementClickInterceptedException:
-                self.driver.find_element_by_xpath('/html/body/div[7]/div/div/div/div[3]/button[2]').click()
 
 
 follow_bot = InstaFollower()
