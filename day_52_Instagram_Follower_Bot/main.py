@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException
 from my_conf import chromedriver_path, LOGIN, PASS, SIMILAR_ACCOUNT
 from time import sleep
 from random import randint
@@ -26,7 +26,7 @@ class InstaFollower:
         sleep(3)
         notnow_btn = self.driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div/div/div/button')
         notnow_btn.click()
-        sleep(1)
+        sleep(2)
         notnow_btn2 = self.driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[2]')
         notnow_btn2.click()
         sleep(2)
@@ -49,15 +49,13 @@ class InstaFollower:
 
     def follow(self):
         sleep(5)
-        followers = self.driver.find_elements_by_xpath('/html/body/div[6]/div/div/div[2]/ul/div/li')
+        followers = self.driver.find_elements_by_css_selector('li button')
         for follower in followers:
             sleep(randint(1000, 1600) / 1000)
             try:
-                follower.find_element_by_css_selector('button').click()
+                follower.click()
             except ElementClickInterceptedException:
                 self.driver.find_element_by_xpath('/html/body/div[7]/div/div/div/div[3]/button[2]').click()
-            except NoSuchElementException:
-                print('tried to follow myself')
 
 
 follow_bot = InstaFollower()
