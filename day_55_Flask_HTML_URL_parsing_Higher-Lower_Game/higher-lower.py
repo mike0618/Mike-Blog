@@ -9,7 +9,7 @@ links = ['https://media.giphy.com/media/jD4DwBtqPXRXa/giphy.gif',
          'https://media.giphy.com/media/4T7e4DmcrP9du/giphy.gif', ]
 
 
-def render(case):  # the rendering function with a random RGB colors
+def render(case):  # the rendering function with random RGB colors
     return f'<h1 style="color: #{randint(0, 0xFFFFFF):06x}">{msg[case]}</h1>' \
            f'<img src="{links[case]}" width=300 alt="{msg[case]}">'
 
