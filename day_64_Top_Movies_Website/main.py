@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yYzU8-S*MUba321'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///top_movies.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db=SQLAlchemy(app)
+db = SQLAlchemy(app)
 Bootstrap(app)
 
 
@@ -27,7 +27,10 @@ class Movie(db.Model):
 
     def __repr__(self):
         return f"<Movie {self.title!r}>"
+
+
 db.create_all()
+
 
 class MovieEdit(FlaskForm):
     rating = DecimalField('Your Rating Out of 10 e.g. 7.5', validators=[DataRequired()])
@@ -85,11 +88,6 @@ def add():
         print(entries)
         return render_template('select.html', entries=entries)
     return render_template('add.html', form=form)
-
-
-@app.route('/select')
-def select():
-    return render_template('select.html')
 
 
 @app.route('/found')
