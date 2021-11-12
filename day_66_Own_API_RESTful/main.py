@@ -67,58 +67,65 @@ def get_all_cafes():
 @app.route('/search')
 def search_cafe():
     loc = request.args.get('loc')
-    found_cafe = db.session.query(Cafe).filter_by(location=loc).first()
-    if found_cafe:
-        return jsonify(cafe=[found_cafe.to_dict()])
+    # found_cafe = db.session.query(Cafe).filter_by(location=loc).first()
+    if loc:
+        found_cafes = Cafe.query.filter(Cafe.location.contains(loc))
+        if found_cafes.count():
+            # return jsonify(cafe=[found_cafe.to_dict()])
+            return jsonify(cafes=[cafe.to_dict() for cafe in found_cafes])
     return jsonify(error={'Not Found': "Sorry, we don't have a cafe at that location."}), 404
 
 
 # HTTP POST - Create Record
-@app.route('/add', methods=['POST'])
+@app.route('/cafe', methods=['POST'])
 def add_cafe():
-    api_key = request.form.get('api-key')
+    api_key = request.headers.get('api-key')
     if api_key == 'TopSecretAPIKey':
-        new_cafe = Cafe(name=request.form.get("name"),
-                        map_url=request.form.get("map_url"),
-                        img_url=request.form.get("img_url"),
-                        location=request.form.get("location"),
-                        has_sockets=bool(request.form.get("has_sockets")),
-                        has_toilet=bool(request.form.get("has_toilet")),
-                        has_wifi=bool(request.form.get("has_wifi")),
-                        can_take_calls=bool(request.form.get("can_take_calls")),
-                        seats=request.form.get("seats"),
-                        coffee_price=request.form.get("coffee_price"), )
-        db.session.add(new_cafe)
-        db.session.commit()
-        print(new_cafe.name, new_cafe.map_url)
-        return jsonify(response={'success': 'Successfully added the new cafe.'})
+        name = request.form.get("name")
+        if not Cafe.query.filter_by(name=name).first():
+            new_cafe = Cafe(name=name,
+                            map_url=request.form.get("map_url"),
+                            img_url=request.form.get("img_url"),
+                            location=request.form.get("location"),
+                            has_sockets=bool(request.form.get("has_sockets")),
+                            has_toilet=bool(request.form.get("has_toilet")),
+                            has_wifi=bool(request.form.get("has_wifi")),
+                            can_take_calls=bool(request.form.get("can_take_calls")),
+                            seats=request.form.get("seats"),
+                            coffee_price=request.form.get("coffee_price"), )
+            db.session.add(new_cafe)
+            db.session.commit()
+            return jsonify(response={'success': 'Successfully added the new cafe.'})
+        return jsonify(error={'Forbidden': 'Sorry, a cafe with that name exists in the database.'}), 403
     return jsonify(error={'Forbidden': "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
 
 
 # HTTP PUT/PATCH - Update Record
-@app.route('/update-price/<int:id>', methods=['PATCH'])
+@app.route('/cafe/<int:id>', methods=['PATCH'])
 def update_price(id):
-    cafe = Cafe.query.get(id)
-    print(db.session.query_property())
-    if cafe:
-        cafe.coffee_price = request.args.get('new_price')
-        db.session.commit()
-        return jsonify(success='Successfully updated the price.')
-    return jsonify(error={'Not found': 'Sorry a cafe with that id was not found in the database.'}), 404
+    api_key = request.headers.get('api-key')
+    if api_key == 'TopSecretAPIKey':
+        cafe = Cafe.query.get(id)
+        if cafe:
+            cafe.coffee_price = request.form.get('new_price')
+            db.session.commit()
+            return jsonify(success='Successfully updated the price.')
+        return jsonify(error={'Not found': 'Sorry, a cafe with that id was not found in the database.'}), 404
+    return jsonify(error={'Forbidden': "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
 
 
 # HTTP DELETE - Delete Record
-@app.route('/report-closed/<int:id>', methods=['DELETE'])
+@app.route('/cafe/<int:id>', methods=['DELETE'])
 def delete_cafe(id):
-    cafe = db.session.query(Cafe).get(id)
-    if cafe:
-        api_key = request.args.get('api-key')
-        if api_key == 'TopSecretAPIKey':
+    api_key = request.headers.get('api-key')
+    if api_key == 'TopSecretAPIKey':
+        cafe = db.session.query(Cafe).get(id)
+        if cafe:
             db.session.delete(cafe)
             db.session.commit()
             return jsonify(success=f'The {cafe.name} is successfully deleted.')
-        return jsonify(error={'Forbidden': "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
-    return jsonify(error={'Not Found': "Sorry, a cafe with that id was not found in the database."}), 404
+        return jsonify(error={'Not Found': "Sorry, a cafe with that id was not found in the database."}), 404
+    return jsonify(error={'Forbidden': "Sorry, that's not allowed. Make sure you have the correct api_key."}), 403
 
 
 if __name__ == '__main__':
