@@ -6,10 +6,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm, MessageForm
 from flask_gravatar import Gravatar
 from bleach import clean
 from functools import wraps
+import smtplib
+from my_conf import EMAIL, PASS
+from email.message import EmailMessage
+from email.headerregistry import Address
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '41P&%*2,Bt2eYwC4sM192qN+lD*Ak8I(fgL2Y9a,Q3Jyd'
@@ -182,9 +186,25 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
-    return render_template("contact.html")
+    form = MessageForm()
+    if form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash('Log in or register to send a message.')
+            return redirect(url_for('login'))
+        msg = EmailMessage()
+        msg['Subject'] = "Message from Mike's Blog."
+        msg['From'] = EMAIL
+        msg['To'] = EMAIL
+        msg.add_alternative(clean_html(form.text.data), subtype='html')
+        with smtplib.SMTP('smtp.mail.yahoo.com') as conn:
+            conn.starttls()
+            conn.login(user=EMAIL, password=PASS)
+            conn.send_message(msg)
+        flash('Your message was successfully sent.')
+        return redirect(url_for('contact'))
+    return render_template("contact.html", form=form)
 
 
 @app.route("/new-post", methods=['GET', 'POST'])
