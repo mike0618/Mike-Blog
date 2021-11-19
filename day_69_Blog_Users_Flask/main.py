@@ -11,9 +11,8 @@ from flask_gravatar import Gravatar
 from bleach import clean
 from functools import wraps
 import smtplib
-from my_conf import EMAIL, PASS
+from my_conf_google import EMAIL, PASS, SMTP_HOST
 from email.message import EmailMessage
-from email.headerregistry import Address
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '41P&%*2,Bt2eYwC4sM192qN+lD*Ak8I(fgL2Y9a,Q3Jyd'
@@ -197,8 +196,9 @@ def contact():
         msg['Subject'] = "Message from Mike's Blog."
         msg['From'] = EMAIL
         msg['To'] = EMAIL
-        msg.add_alternative(clean_html(form.text.data), subtype='html')
-        with smtplib.SMTP('smtp.mail.yahoo.com') as conn:
+        msg.add_alternative(f"<p><b>Name: {current_user.name}</b></p><p><b>Email: {current_user.email}</b></p>" +
+                            clean_html(form.text.data), subtype='html')
+        with smtplib.SMTP(SMTP_HOST, port=587) as conn:
             conn.starttls()
             conn.login(user=EMAIL, password=PASS)
             conn.send_message(msg)
