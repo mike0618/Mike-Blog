@@ -45,7 +45,7 @@
                     {% for comment in post.comments | reverse: %}
                     <div class="media comment">
                         <div class="commenterImage">
-                            <img alt="avatar" src={{comment.author.email | gravatar}}/>
+                            <img alt="avatar" src='{{comment.author.email | gravatar}}'/>
                         </div>
                         <div class="media-body ml-2">
                             <div class="user_name"> {{ comment.author.name }}</div>
