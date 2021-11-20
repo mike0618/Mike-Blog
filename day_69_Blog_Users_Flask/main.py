@@ -37,7 +37,7 @@ login_manager.init_app(app)
 
 # Gravatar
 gravatar = Gravatar(app,
-                    size=40,
+                    size=80,
                     rating='g',
                     default='identicon',
                     force_default=False,
