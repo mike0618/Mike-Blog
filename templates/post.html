@@ -42,13 +42,13 @@
                     <p>{{post.comments | length}} comments</p>
                 </div>
                 <div class="commentBox">
-                    {% for comment in post.comments | reverse: %}
+                    {% for comment in post.post_comments | reverse: %}
                     <div class="media comment">
                         <div>
                             <img class="rounded-circle" width="50px" alt="avatar" src='{{comment.author.email | gravatar}}'/>
                         </div>
                         <div class="media-body ml-2">
-                            <div class="user_name"> {{ comment.author.name }}</div>
+                            <div class="user_name"> {{ comment.c_author.name }}</div>
                             <p class="commentText">{{ comment.text | safe }}</p>
                         </div>
                     </div>

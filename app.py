@@ -55,7 +55,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
     posts = relationship('BlogPost', back_populates='author')
-    comments = relationship('Comment', back_populates='author')
+    comments = relationship('Comment', back_populates='c_author')
 
 
 class BlogPost(db.Model):
@@ -68,16 +68,16 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
-    comments = relationship('Comment', back_populates='post')
+    post_comments = relationship('Comment', back_populates='post')
 
 
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    author = relationship('User', back_populates='comments')
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    post = relationship('BlogPost', back_populates='comments')
+    c_author = relationship('User', back_populates='comments')
+    c_author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post = relationship('BlogPost', back_populates='post_comments')
     post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'))
 
 
