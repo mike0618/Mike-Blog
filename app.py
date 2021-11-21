@@ -11,11 +11,12 @@ from flask_gravatar import Gravatar
 from bleach import clean
 from functools import wraps
 import smtplib
-from my_conf_google import EMAIL, PASS, SMTP_HOST
+from my_conf_google import EMAIL, SMTP_HOST
 from email.message import EmailMessage
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '41P&%*2,Bt2eYwC4sM192qN+lD*Ak8I(fgL2Y9a,Q3Jyd'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -27,7 +28,7 @@ def inject_today():
 
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -200,7 +201,7 @@ def contact():
                             clean_html(form.text.data), subtype='html')
         with smtplib.SMTP(SMTP_HOST, port=587) as conn:
             conn.starttls()
-            conn.login(user=EMAIL, password=PASS)
+            conn.login(user=EMAIL, password=os.environ.get('PASS'))
             conn.send_message(msg)
         flash('Your message was successfully sent.')
         return redirect(url_for('contact'))
