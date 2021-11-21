@@ -16,6 +16,7 @@ from email.message import EmailMessage
 import os
 
 app = Flask(__name__)
+print(os.environ.get("SECRET_KEY"), os.environ.get("PASS"))
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
@@ -28,7 +29,12 @@ def inject_today():
 
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL").replace("://", "ql://", 1)
+db_url = os.environ.get("DATABASE_URL")
+if db_url:
+    db_url = db_url.replace("://", "ql://", 1)
+else:
+    db_url = ("sqlite:///blog.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -76,7 +82,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     c_author = relationship('User', back_populates='comments')
-    c_author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post = relationship('BlogPost', back_populates='post_comments')
     post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'))
 
