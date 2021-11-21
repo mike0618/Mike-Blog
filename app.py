@@ -179,7 +179,7 @@ def show_post(post_id):
             flash('Log in or register to comment')
             return redirect(url_for('login'))
         new_comment = Comment(text=clean_html(form.text.data),
-                              author=current_user,
+                              c_author=current_user,
                               post=requested_post)
         db.session.add(new_comment)
         db.session.commit()
