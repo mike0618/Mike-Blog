@@ -16,7 +16,6 @@ from email.message import EmailMessage
 import os
 
 app = Flask(__name__)
-print(os.environ.get("SECRET_KEY"), os.environ.get("PASS"))
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
