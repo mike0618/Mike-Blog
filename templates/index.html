@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            {% for post in all_posts %}
+            {% for post in all_posts | reverse %}
             <div class="post-preview">
                 <a href="{{ url_for('show_post', post_id=post.id) }}">
                     <h2 class="post-title">
@@ -43,7 +43,7 @@
 
 
             <!-- New Post -->
-            {% if current_user.id == 1: %}
+            {% if current_user.id == 1 %}
             <div class="clearfix">
                 <a class="btn btn-primary float-right" href="{{url_for('add_new_post')}}">Create New Post</a>
             </div>

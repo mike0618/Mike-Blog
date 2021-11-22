@@ -59,8 +59,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
-    posts = relationship('BlogPost', back_populates='author')
-    comments = relationship('Comment', back_populates='c_author')
+    posts = relationship('BlogPost', cascade="all, delete", back_populates='author')
+    comments = relationship('Comment', cascade="all, delete", back_populates='c_author')
 
 
 class BlogPost(db.Model):
@@ -73,7 +73,7 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
-    post_comments = relationship('Comment', back_populates='post')
+    post_comments = relationship('Comment', cascade="all, delete", back_populates='post')
 
 
 class Comment(db.Model):
@@ -182,6 +182,7 @@ def show_post(post_id):
                               post=requested_post)
         db.session.add(new_comment)
         db.session.commit()
+        print(len(Comment.query.all()))  # check ON_DELETE
         return redirect(url_for('show_post', post_id=requested_post.id))
     return render_template("post.html", post=requested_post, form=form)
 
