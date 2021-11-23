@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    email = db.Column(db.String(100), unique=False, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
     posts = relationship('BlogPost', cascade="all, delete", back_populates='author')
     comments = relationship('Comment', cascade="all, delete", back_populates='c_author')
@@ -286,6 +286,8 @@ def db_paste():
             del row['_sa_instance_state']
             del row['id']
             if key == 'users':
+                if User.query.filter_by(email=row['email']).first():
+                    continue
                 objc = User()
             elif key == 'posts':
                 objc = BlogPost()
