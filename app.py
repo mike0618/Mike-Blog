@@ -258,6 +258,15 @@ def delete_post(post_id):
     return redirect(url_for('get_all_posts'))
 
 
+@app.route('/delete')
+@admin_only
+def delete_user():
+    user_to_delete = User.query.get(current_user.id)
+    db.session.delete(user_to_delete)
+    db.session.commit()
+    return redirect(url_for('db_copy'))
+
+
 # DB Migration
 dbusers = []
 dbposts = []
@@ -286,8 +295,6 @@ def db_paste():
             del row['_sa_instance_state']
             del row['id']
             if key == 'users':
-                if User.query.filter_by(email=row['email']).first():
-                    continue
                 objc = User()
             elif key == 'posts':
                 objc = BlogPost()
