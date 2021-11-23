@@ -32,7 +32,7 @@ db_url = os.environ.get("DATABASE_URL")
 if db_url:
     db_url = db_url.replace("://", "ql://", 1)
 else:
-    db_url = ("sqlite:///blog.db")
+    db_url = "sqlite:///blog.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=False, nullable=False)
     password = db.Column(db.String(150), nullable=False)
     posts = relationship('BlogPost', cascade="all, delete", back_populates='author')
     comments = relationship('Comment', cascade="all, delete", back_populates='c_author')
@@ -182,7 +182,6 @@ def show_post(post_id):
                               post=requested_post)
         db.session.add(new_comment)
         db.session.commit()
-        print(len(Comment.query.all()))  # check ON_DELETE
         return redirect(url_for('show_post', post_id=requested_post.id))
     return render_template("post.html", post=requested_post, form=form)
 
@@ -256,6 +255,46 @@ def delete_post(post_id):
     post_to_delete = BlogPost.query.get(post_id)
     db.session.delete(post_to_delete)
     db.session.commit()
+    return redirect(url_for('get_all_posts'))
+
+
+# DB Migration
+dbusers = []
+dbposts = []
+dbcomments = []
+dbdict = {'users': dbusers, 'posts': dbposts, 'comments': dbcomments}
+
+
+@app.route('/copy')
+def db_copy():
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+    for user in User.query.all():
+        dbusers.append(user.__dict__)
+    for post in BlogPost.query.all():
+        dbposts.append(post.__dict__)
+    for comment in Comment.query.all():
+        dbcomments.append(comment.__dict__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+    return redirect(url_for('db_paste'))
+
+
+@app.route('/paste')
+def db_paste():
+    print(app.config['SQLALCHEMY_DATABASE_URI'])
+    for key, tbl in dbdict.items():
+        for row in tbl:
+            del row['_sa_instance_state']
+            del row['id']
+            if key == 'users':
+                objc = User()
+            elif key == 'posts':
+                objc = BlogPost()
+            else:
+                objc = Comment()
+            for k, v in row.items():
+                setattr(objc, k, v)
+            db.session.add(objc)
+            db.session.commit()
     return redirect(url_for('get_all_posts'))
 
 
