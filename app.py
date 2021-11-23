@@ -259,7 +259,7 @@ def delete_post(post_id):
 
 
 @app.route('/delete')
-@admin_only
+# @admin_only
 def delete_user():
     users = User.query.all()
     for user in users:
