@@ -264,7 +264,7 @@ def delete_user():
     user_to_delete = User.query.get(current_user.id)
     db.session.delete(user_to_delete)
     db.session.commit()
-    return redirect(url_for('db_copy'))
+    return redirect(url_for('get_all_posts'))
 
 
 # DB Migration
