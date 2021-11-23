@@ -277,12 +277,14 @@ dbdict = {'users': dbusers, 'posts': dbposts, 'comments': dbcomments}
 @app.route('/copy')
 def db_copy():
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+    print(app.config['SQLALCHEMY_DATABASE_URI'])
     for user in User.query.all():
         dbusers.append(user.__dict__)
     for post in BlogPost.query.all():
         dbposts.append(post.__dict__)
     for comment in Comment.query.all():
         dbcomments.append(comment.__dict__)
+    print(dbusers)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     return redirect(url_for('db_paste'))
 
