@@ -261,9 +261,11 @@ def delete_post(post_id):
 @app.route('/delete')
 @admin_only
 def delete_user():
-    user_to_delete = User.query.get(current_user.id)
-    db.session.delete(user_to_delete)
-    db.session.commit()
+    users = User.query.all()
+    for user in users:
+        user_to_delete = User.query.get(user.id)
+        db.session.delete(user_to_delete)
+        db.session.commit()
     return redirect(url_for('get_all_posts'))
 
 
