@@ -23,6 +23,19 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+
+        {% for user in all_users | reverse %}
+            <div class="post-preview">
+                    <h2 class="post-title">
+                        {{user.name}}
+                    </h2>
+                    <h3 class="post-subtitle">
+                        {{user.email}}
+                    </h3>
+            </div>
+            <hr>
+            {% endfor %}
+
             {% for post in all_posts | reverse %}
             <div class="post-preview">
                 <a href="{{ url_for('show_post', post_id=post.id) }}">
