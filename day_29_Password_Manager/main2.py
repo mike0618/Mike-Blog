@@ -23,16 +23,16 @@ except json.JSONDecodeError:
 # ---------------------------- ENCRYPTION/DECRYPTION ---------------------------- #
 def crypt(pw, decrypt=False):
     key = key_entry.get()
-    password = ''
+    passw = ''
     if key:
         if decrypt:
             pw = pw.split('/')[:-1]
             for i in range(len(pw)):
-                password += chr(int(pw[i]) ^ ord(key[i % len(key)]))
+                passw += chr(int(pw[i]) ^ ord(key[i % len(key)]))
         else:
             for i in range(len(pw)):
-                password += f'{ord(pw[i]) ^ ord(key[i % len(key)])}/'
-    return password
+                passw += f'{ord(pw[i]) ^ ord(key[i % len(key)])}/'
+    return passw
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -53,7 +53,7 @@ def passgen():
 
 
 # ---------------------------- SHOW/HIDE PASSWORDS ------------------------------- #
-def show():
+def get_pass(show=False):
     pass_entry.delete(0, END)
     site = site_combo.get()
     login = login_combo.get()
@@ -64,9 +64,10 @@ def show():
             if site in data and login in data[site]:
                 pw = data[site][login]
                 if key_entry.get():
-                    pass_entry.insert(0, crypt(pw, True))
                     pyperclip.copy(crypt(pw, True))
                     info_label.config(fg='#499c59', text='Your password copied to clipboard')
+                    if show:
+                        pass_entry.insert(0, crypt(pw, True))
                 else:
                     pass_entry.insert(0, 'Please enter a SECRET WORD')
             else:
@@ -167,10 +168,15 @@ gen_btn = Button(padx=43, pady=1, text="Generate", anchor='s', highlightthicknes
                  activeforeground='white', activebackground='#595959', font=('Courier', 13, 'normal'), command=passgen)
 gen_btn.grid(row=4, column=2)
 show_btn = Button(padx=118, pady=1, text="Show", anchor='s', highlightthickness=0, fg='white', bg='#363636',
-                  activeforeground='white', activebackground='#7d5d30', font=('Courier', 13, 'normal'), command=show)
+                  activeforeground='white', activebackground='#7d5d30', font=('Courier', 13, 'normal'),
+                  command=lambda: get_pass(True))
 show_btn.grid(row=5, column=1, sticky='w')
-hide_btn = Button(padx=24, pady=1, text="Hide", anchor='s', highlightthickness=0, fg='white', bg='#7d5d30',
-                  activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=hide)
+copy_btn = Button(padx=24, pady=1, text="Copy", anchor='s', highlightthickness=0, fg='white', bg='#999900',
+                  activeforeground='white', activebackground='#777700', font=('Courier', 13, 'normal'),
+                  command=get_pass)
+copy_btn.grid(row=6, column=0, sticky='w')
+hide_btn = Button(padx=24, pady=1, text="Hide", anchor='s', highlightthickness=0, fg='white', bg='#000099',
+                  activeforeground='white', activebackground='#000077', font=('Courier', 13, 'normal'), command=hide)
 hide_btn.grid(row=5, column=0)
 add_btn = Button(padx=68, pady=1, text="Add", anchor='s', highlightthickness=0, fg='white', bg='#363636',
                  activeforeground='white', activebackground='#499c59', font=('Courier', 13, 'normal'), command=save)

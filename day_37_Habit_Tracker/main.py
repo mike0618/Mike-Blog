@@ -20,7 +20,7 @@ headers = {'X-USER-TOKEN': TOKEN}
 # resp = requests.post(graph_endp, json=graph_conf, headers=headers)
 
 pix_endp = f'{pixela_endp}/{USER}/graphs/{GRAPH}'
-d_ago = 0
+d_ago = 1
 date = (date.today() - timedelta(days=d_ago)).strftime('%Y%m%d')
 pix_conf = {'date': date,
             'quantity': '120', }
